@@ -1,0 +1,233 @@
+/* Admin Panel Styles - matches site tone */
+.admin-panel {
+    background: var(--white, #fff);
+    border-radius: 12px;
+    box-shadow: 0 2px 16px #0001;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 700px;
+}
+
+.admin-panel h2 {
+    color: var(--accent, #5E3F44);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-panel-header h2 {
+    margin: 0;
+}
+
+.admin-panel-header #logoutBtn {
+    float: none;
+    margin-bottom: 0;
+}
+
+.admin-gallery-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.admin-gallery-table th,
+.admin-gallery-table td {
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--peony, #E6CECE);
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.admin-gallery-table th {
+    background: var(--petal, #F7EAEB);
+    color: var(--primary, #3E3333);
+    font-weight: 500;
+}
+
+.admin-gallery-table img {
+    max-width: 80px;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px #0001;
+}
+
+.admin-gallery-table input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.admin-gallery-table button {
+    background: var(--accent, #5E3F44);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 0.3rem;
+    transition: background 0.2s;
+}
+
+.admin-gallery-table button:hover {
+    background: var(--primary, #3E3333);
+}
+
+.admin-upload-form {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+}
+
+.admin-upload-form input[type="file"] {
+    font-size: 1rem;
+}
+
+.admin-upload-form input[type="text"] {
+    padding: 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.admin-upload-form button {
+    background: var(--accent, #5E3F44);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.admin-upload-form button:hover {
+    background: var(--primary, #3E3333);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--petal, #F7EAEB);
+}
+
+.admin-form {
+    background: var(--white, #fff);
+    border-radius: 14px;
+    box-shadow: 0 4px 32px #0002;
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin: 0 auto 2rem auto;
+    max-width: 350px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+}
+
+.admin-form input[type="password"] {
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--peony, #E6CECE);
+    background: var(--petal, #F7EAEB);
+    outline: none;
+    transition: border 0.2s;
+}
+
+.admin-form input[type="password"]:focus {
+    border: 1.5px solid var(--accent, #5E3F44);
+}
+
+.admin-form button {
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent, #5E3F44), var(--primary, #3E3333));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px #0001;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.admin-form button:hover {
+    background: linear-gradient(90deg, var(--primary, #3E3333), var(--accent, #5E3F44));
+    box-shadow: 0 4px 16px #0002;
+}
+
+.error {
+    color: #b00;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.admin-panel button#logoutBtn {
+    float: right;
+    margin-bottom: 1.5rem;
+    background: var(--primary, #5E3F44);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px #0001;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.admin-panel button#logoutBtn:hover {
+    background: var(--accent, #A47E82);
+}
+
+@media (max-width: 600px) {
+    .admin-form {
+        padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+        max-width: 98vw;
+    }
+
+    .admin-panel {
+        padding: 1rem 0.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .admin-panel {
+        max-width: 99vw;
+        padding: 1rem 0.5rem;
+    }
+
+    .admin-panel-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .admin-upload-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+    }
+
+    .admin-gallery-table img {
+        max-width: 60px;
+    }
+}

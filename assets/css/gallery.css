@@ -1,0 +1,168 @@
+/* ===================================
+   GALLERY PAGE STYLESHEET
+   =================================== */
+
+/* Gallery Header */
+.gallery-header {
+  background: var(--peony);
+  padding: 6rem 0 3rem 0;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.gallery-header-content h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 3rem;
+  color: var(--cocoa);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.gallery-header-content p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  color: var(--merlot);
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--cocoa);
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid var(--cocoa);
+  background: transparent;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.back-button:hover {
+  background: var(--cocoa);
+  color: var(--almond);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(62, 51, 51, 0.2);
+}
+
+/* Gallery Main */
+.gallery-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem 2vw 2rem 2vw;
+}
+
+/* Always visible description below image */
+.gallery-item-description {
+  color: #fff;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 0.75rem;
+  text-align: center;
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+  word-break: break-word;
+  border: none;
+  background: none;
+  min-height: unset;
+  width: auto;
+  box-sizing: border-box;
+  display: block;
+  line-height: 1.3;
+}
+
+.gallery-item {
+  position: relative;
+  box-shadow: 0 4px 20px rgba(62, 51, 51, 0.1);
+  background: var(--mauve);
+  transition: all 0.3s ease;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(62, 51, 51, 0.2);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item-overlay {
+  display: none !important;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 0;
+}
+
+.gallery-item-title {
+  display: none;
+}
+
+/* Loading State */
+.gallery-loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--cocoa);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gallery-header {
+    padding: 4rem 0 2rem 0;
+  }
+
+  .gallery-header-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .gallery-header-content p {
+    font-size: 1rem;
+  }
+
+  .gallery-main {
+    padding: 2rem 1rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-header-content h1 {
+    font-size: 2rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

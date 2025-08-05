@@ -1,0 +1,157 @@
+/* ===================================
+   RESPONSIVE STYLESHEET
+   =================================== */
+
+/* Tablet Styles */
+@media (max-width: 800px) {
+  .navbar {
+    padding: 0.7rem 1rem;
+  }
+
+  /* Overlay for mobile menu */
+  .mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(62, 51, 51, 0.25);
+    z-index: 49;
+    transition: opacity 0.2s;
+  }
+
+  .mobile-menu-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .navbar ul {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: var(--nav-bg);
+    flex-direction: column;
+    width: 180px;
+    box-shadow: var(--nav-shadow);
+    border-radius: 0 0 10px 10px;
+    display: none;
+    padding: 1rem 0;
+  }
+
+  .navbar ul.open {
+    display: flex;
+  }
+
+  .navbar ul li a {
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    font-size: 2rem;
+  }
+
+  .navbar ul li a::after {
+    background: var(--primary);
+  }
+
+  .navbar .hamburger {
+    display: flex;
+    z-index: 50;
+    transition: background 0.2s;
+  }
+
+  .navbar .hamburger.open {
+    background: var(--white);
+  }
+
+  .navbar .hamburger.open span {
+    background: var(--primary) !important;
+  }
+
+  #nav-links {
+    text-align: center;
+    width: 60%;
+    height: 100vh;
+    top: 0;
+    padding-top: 100px;
+  }
+
+  /* About section responsive */
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-text h2 {
+    font-size: 2rem;
+  }
+
+  .about-image img {
+    height: 300px;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+
+  /* Add more spacing to main content on mobile */
+  main {
+    padding-left: 3rem;
+  }
+
+  .about-container {
+    padding-left: 3rem;
+  }
+
+  .gallery-container {
+    padding-left: 3rem;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 3.2rem;
+    line-height: 1.1;
+  }
+
+  .hero-banner {
+    padding: 1rem 0;
+  }
+
+  .banner-column h3 {
+    font-size: 1rem;
+  }
+
+  .banner-column p {
+    font-size: 0.8rem;
+  }
+
+  section {
+    padding: 1rem;
+  }
+
+  main {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .banner-column h3 {
+    font-size: 0.9rem;
+  }
+
+  .banner-column p {
+    font-size: 0.75rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

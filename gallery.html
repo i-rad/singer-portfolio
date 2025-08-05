@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery | Petra Golubovic</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@100;300;400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/gallery.css">
+</head>
+
+<body>
+  <!-- Floating Contact Bar -->
+  <div class="floating-bar" id="floating-bar">
+    <div class="contact-toggle" id="contact-toggle">
+      <i class="fas fa-plus"></i>
+    </div>
+    <div class="contact-icons" id="contact-icons">
+      <a href="mailto:your.email@example.com" target="_blank" title="Email Me" class="email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="tel:+1234567890" title="Call Me" class="phone">
+        <i class="fas fa-phone"></i>
+      </a>
+      <a href="https://instagram.com/yourusername" target="_blank" title="Instagram" class="instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://facebook.com/yourusername" target="_blank" title="Facebook" class="facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://wa.me/1234567890" target="_blank" title="WhatsApp" class="whatsapp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar scrolled">
+    <a href="index.html" class="logo">Petra Golubovic</a>
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Gallery Header -->
+  <section class="gallery-header">
+    <div class="gallery-header-content">
+      <h1>Gallery</h1>
+      <p>A collection of moments and memories</p>
+      <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+      </a>
+    </div>
+  </section>
+
+  <!-- Gallery Grid -->
+  <main class="gallery-main">
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Images will be loaded dynamically via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/gallery.js"></script>
+</body>
+
+</html>
