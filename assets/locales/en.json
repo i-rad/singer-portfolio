@@ -1,0 +1,68 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "gallery": "Gallery",
+        "blog": "Blog"
+    },
+    "home": {
+        "title": "Petras Music Atelier",
+        "tagline": "Music & Voice in Harmony",
+        "watch": "WATCH",
+        "musicVideos": "Music Videos",
+        "book": "BOOK",
+        "forEvent": "For An Event",
+        "lessons": {
+            "title": "Ready to start your musical journey?",
+            "paragraph1": "You've never played piano before and want to book a lesson with me?\nOr maybe you'd love to gift someone a lesson — because music truly is a beautiful gift!\nOr perhaps you'd rather explore singing instead? Why not!",
+            "paragraph2": "When I'm not performing, I teach — and I'd love to help you take your first step into the world of music.",
+            "button": "Click here to book a lesson",
+            "subtext": "Find out how we can work together to develop your voice, confidence, and musical expression."
+        },
+        "gallery": {
+            "title": "Gallery",
+            "button": "View Full Gallery"
+        }
+    },
+    "gallery": {
+        "title": "Gallery",
+        "subtitle": "A collection of moments and memories",
+        "backButton": "Back to Home"
+    },
+    "about": {
+        "title": "About",
+        "subtitle": "Get to know me",
+        "backButton": "Back to Home",
+        "invitation": {
+            "monogram": "P M A",
+            "title": "A Voice For Your Wedding",
+            "subtitle": "Timeless • Elegant • Personal",
+            "introParagraph": "Close your eyes for a moment and imagine…\n\nA day in your life you'll remember forever.\nYou stand facing each other — your hearts racing, and perhaps a tear of joy gently rolls down your cheek.\nLove, captured in time, surrounded by the joy and prayers of your loved ones.",
+            "quote": {
+                "line1": "Your only word is \"Yes\",",
+                "line2": "while everything else will be expressed through my voice and music."
+            },
+            "aboutPetra": {
+                "paragraph1": "I'm Petra Golubovic Jez, a passionate singer with a deep love for creating heartfelt and timeless performances. I find joy in connecting with people through music and crafting moments that stay in the heart forever.",
+                "paragraph2": "With years of experience in live performance and training in modern vocal technique,\nI bring a unique blend of vocal mastery and emotional depth to every song I perform.",
+                "paragraph3": "Music has been my lifelong companion — from my early piano days to discovering that singing is my true calling. After completing my Bachelor's degree at the Academy of Music in Bosnia, I've sung with numerous ensembles and performed across half the world — from New York to the Sydney Opera House.\nThese life experiences taught me to connect deeply with my emotions, something that shines through in every interpretation.",
+                "paragraph4": "But the most important experience of my life is that, besides music, I have found true love and continue to live it every day.\nI carry it in my voice and use it to shape every note of your celebration, creating a moment to be cherished forever."
+            },
+            "cta": {
+                "button": "RSVP · Book a performance",
+                "note": "Let's craft a ceremony that sounds like your love story."
+            }
+        }
+    },
+    "blog": {
+        "title": "Blog",
+        "subtitle": "Stories, updates, and insights",
+        "backButton": "Back to Home",
+        "noPosts": "No blog posts yet",
+        "checkBack": "Check back soon for updates and stories!",
+        "loading": "Loading blog posts..."
+    },
+    "footer": {
+        "copyright": "© 2025 Petras Music Atelier. All rights reserved."
+    }
+}

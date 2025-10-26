@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Petras Music Atelier</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Italianno&family=MonteCarlo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tangerine:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/blog.css">
+</head>
+
+<body data-page="blog">
+    <!-- Overlay for mobile menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Component containers -->
+    <div id="floating-contact-container"></div>
+    <div id="navbar-container"></div>
+
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <div class="blog-header-content">
+            <h1 data-i18n="blog.title">Blog</h1>
+            <p data-i18n="blog.subtitle">Stories, updates, and insights</p>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span data-i18n="blog.backButton">Back to Home</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Blog Main -->
+    <main class="blog-main">
+        <div class="blog-container" id="blog-container">
+            <!-- Blog posts will be loaded dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/components.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/blog.js"></script>
+</body>
+
+</html>

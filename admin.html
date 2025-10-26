@@ -16,15 +16,40 @@
     </form>
     <div class="admin-panel" id="adminPanel" style="display:none">
         <div class="admin-panel-header">
-            <h2>Gallery Admin</h2>
+            <h2>Content Admin</h2>
             <button id="logoutBtn">Logout</button>
         </div>
-        <form class="admin-upload-form" id="uploadForm">
-            <input type="file" id="uploadImage" accept="image/*" required />
-            <input type="text" id="uploadDesc" placeholder="Description (optional)" />
-            <button type="submit">Add Image</button>
-        </form>
-        <div id="galleryAdmin"></div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-button active" data-tab="gallery">Gallery</button>
+            <button class="tab-button" data-tab="blog">Blog</button>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div id="galleryTab" class="tab-content active">
+            <form class="admin-upload-form" id="uploadForm">
+                <input type="file" id="uploadImage" accept="image/*" required />
+                <input type="text" id="uploadDesc" placeholder="Description (optional)" />
+                <button type="submit">Add Image</button>
+            </form>
+            <div id="galleryAdmin"></div>
+        </div>
+
+        <!-- Blog Tab -->
+        <div id="blogTab" class="tab-content">
+            <form class="admin-upload-form" id="blogForm">
+                <input type="text" id="blogTitle" placeholder="Post Title *" required />
+                <textarea id="blogContent" placeholder="Post Content *" rows="10" required></textarea>
+                <input type="file" id="blogImage" accept="image/*" />
+                <label>Featured Image (max 5MB)</label>
+                <input type="file" id="blogVideo" accept="video/*" />
+                <label>Featured Video (max 50MB)</label>
+                <textarea id="blogEmbedded" placeholder="Embedded Video HTML (YouTube, Vimeo, etc.)"></textarea>
+                <button type="submit">Create Post</button>
+            </form>
+            <div id="blogAdmin"></div>
+        </div>
     </div>
     <script src="/assets/js/admin.js"></script>
 </body>

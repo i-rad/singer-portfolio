@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update page title with image count
     const title = document.querySelector('title');
     if (title) {
-      title.textContent = `Gallery (${images.length} images) | Petra Golubovic`;
+      title.textContent = `Gallery (${images.length} images) | Petras Music Atelier`;
     }
   }
 

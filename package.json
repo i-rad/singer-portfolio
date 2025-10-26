@@ -1,7 +1,7 @@
 {
     "name": "singer-portfolio",
     "version": "1.0.0",
-    "description": "Portfolio and gallery site for Petra Golubovic (Singer)",
+    "description": "Portfolio and gallery site for Petra Jež (Singer)",
     "main": "server.js",
     "scripts": {
         "start": "node server.js"
@@ -24,6 +24,6 @@
         "express",
         "sqlite"
     ],
-    "author": "Petra Golubovic",
+    "author": "Petra Jež",
     "license": "MIT"
 }

@@ -5,11 +5,11 @@
     box-shadow: 0 2px 16px #0001;
     padding: 2rem;
     margin: 2rem auto;
-    max-width: 700px;
+    max-width: 1000px;
 }
 
 .admin-panel h2 {
-    color: var(--accent, #5E3F44);
+    color: var(--accent, #66021F);
     font-family: 'Montserrat', sans-serif;
     font-size: 2rem;
     margin-bottom: 1.5rem;
@@ -21,6 +21,8 @@
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--rose-ivory);
+    padding-bottom: 1rem;
 }
 
 .admin-panel-header h2 {
@@ -32,6 +34,43 @@
     margin-bottom: 0;
 }
 
+.admin-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--rose-ivory);
+}
+
+.tab-button {
+    padding: 0.8rem 2rem;
+    background: transparent;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--ruby);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.tab-button:hover {
+    background: rgba(102, 2, 31, 0.05);
+}
+
+.tab-button.active {
+    border-bottom-color: var(--ruby);
+    color: var(--ruby);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 .admin-gallery-table {
     width: 100%;
     border-collapse: collapse;
@@ -41,14 +80,14 @@
 .admin-gallery-table th,
 .admin-gallery-table td {
     padding: 0.7rem 0.5rem;
-    border-bottom: 1px solid var(--peony, #E6CECE);
+    border-bottom: 1px solid var(--rose-ivory, #FFE9EC);
     text-align: left;
     font-family: 'Montserrat', sans-serif;
 }
 
 .admin-gallery-table th {
-    background: var(--petal, #F7EAEB);
-    color: var(--primary, #3E3333);
+    background: var(--rose-ivory, #FFE9EC);
+    color: var(--primary, #66021F);
     font-weight: 500;
 }
 
@@ -67,7 +106,7 @@
 }
 
 .admin-gallery-table button {
-    background: var(--accent, #5E3F44);
+    background: var(--accent, #66021F);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -79,7 +118,7 @@
 }
 
 .admin-gallery-table button:hover {
-    background: var(--primary, #3E3333);
+    background: var(--primary, #66021F);
 }
 
 .admin-upload-form {
@@ -87,21 +126,36 @@
     gap: 1rem;
     align-items: flex-end;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
-.admin-upload-form input[type="file"] {
+.admin-upload-form label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: var(--ruby);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.admin-upload-form input[type="file"],
+.admin-upload-form input[type="text"],
+.admin-upload-form textarea {
     font-size: 1rem;
-}
-
-.admin-upload-form input[type="text"] {
     padding: 0.4rem;
     border-radius: 4px;
     border: 1px solid #ccc;
-    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.admin-upload-form textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
 }
 
 .admin-upload-form button {
-    background: var(--accent, #5E3F44);
+    background: var(--accent, #66021F);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -109,10 +163,11 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .admin-upload-form button:hover {
-    background: var(--primary, #3E3333);
+    background: var(--primary, #66021F);
 }
 
 body {
@@ -120,7 +175,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--petal, #F7EAEB);
+    background: var(--rose-ivory, #FFE9EC);
 }
 
 .admin-form {
@@ -141,21 +196,21 @@ body {
     padding: 0.9rem;
     font-size: 1.1rem;
     border-radius: 8px;
-    border: 1.5px solid var(--peony, #E6CECE);
-    background: var(--petal, #F7EAEB);
+    border: 1.5px solid var(--rose-ivory, #FFE9EC);
+    background: var(--rose-ivory, #FFE9EC);
     outline: none;
     transition: border 0.2s;
 }
 
 .admin-form input[type="password"]:focus {
-    border: 1.5px solid var(--accent, #5E3F44);
+    border: 1.5px solid var(--accent, #66021F);
 }
 
 .admin-form button {
     padding: 0.9rem;
     font-size: 1.1rem;
     border-radius: 8px;
-    background: linear-gradient(90deg, var(--accent, #5E3F44), var(--primary, #3E3333));
+    background: linear-gradient(90deg, var(--accent, #66021F), var(--primary, #66021F));
     color: #fff;
     border: none;
     cursor: pointer;
@@ -167,7 +222,7 @@ body {
 }
 
 .admin-form button:hover {
-    background: linear-gradient(90deg, var(--primary, #3E3333), var(--accent, #5E3F44));
+    background: linear-gradient(90deg, var(--primary, #66021F), var(--accent, #66021F));
     box-shadow: 0 4px 16px #0002;
 }
 
@@ -181,7 +236,7 @@ body {
 .admin-panel button#logoutBtn {
     float: right;
     margin-bottom: 1.5rem;
-    background: var(--primary, #5E3F44);
+    background: var(--primary, #66021F);
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -195,7 +250,40 @@ body {
 }
 
 .admin-panel button#logoutBtn:hover {
-    background: var(--accent, #A47E82);
+    background: var(--accent, #FFE9EC);
+    color: var(--primary);
+}
+
+.blog-posts-list {
+    margin-top: 2rem;
+}
+
+.blog-post-item {
+    background: var(--almond);
+    border: 1px solid var(--rose-ivory);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.blog-post-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--ruby);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.blog-post-item p {
+    margin: 0;
+    color: var(--ruby);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.admin-upload-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 @media (max-width: 600px) {

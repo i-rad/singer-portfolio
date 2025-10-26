@@ -2,25 +2,22 @@
    MAIN STYLESHEET
    =================================== */
 
-/* CSS Variables - Sugar & Stories Color Palette */
+/* CSS Variables - Ruby & Rose Ivory Color Palette */
 :root {
-  --cocoa: #3E3333;
-  --merlot: #5E3F44;
-  --mauve: #A47E82;
-  --peony: #E6CECE;
-  --petal: #F7EAEB;
-  --almond: #F0E7E2;
+  --ruby: #66021F;
+  --rose-ivory: #FFE9EC;
+  --almond: #FFFDFA;
 
   /* Semantic color variables */
-  --primary: var(--cocoa);
-  --accent: var(--merlot);
-  --bg: var(--petal);
+  --primary: var(--ruby);
+  --accent: var(--ruby);
+  --bg: var(--rose-ivory);
   --white: var(--almond);
-  --nav-bg: rgba(240, 231, 226, 0.95);
-  --nav-shadow: 0 2px 12px rgba(62, 51, 51, 0.07);
-  --nav-active: var(--mauve);
+  --nav-bg: rgba(255, 233, 236, 0.95);
+  --nav-shadow: 0 2px 12px rgba(102, 2, 31, 0.15);
+  --nav-active: var(--ruby);
   --float-bg: var(--almond);
-  --float-shadow: 0 2px 8px rgba(62, 51, 51, 0.12);
+  --float-shadow: 0 2px 8px rgba(102, 2, 31, 0.15);
 }
 
 /* Reset and Base Styles */
@@ -65,11 +62,7 @@ body {
 }
 
 /* Main Content */
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem;
-}
+
 
 section {
   margin-bottom: 2.5rem;

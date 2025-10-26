@@ -50,7 +50,36 @@ app.get('/admin', (req, res) => {
 });
 
 const multer = require('multer');
-const upload = multer({ dest: path.join(__dirname, 'gallery') });
+
+// Configure upload limits
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+
+const galleryStorage = multer.diskStorage({
+    destination: path.join(__dirname, 'gallery'),
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const blogStorage = multer.diskStorage({
+    destination: path.join(__dirname, 'blog-assets'),
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: galleryStorage,
+    limits: { fileSize: MAX_IMAGE_SIZE }
+});
+
+const blogUpload = multer({
+    storage: blogStorage,
+    limits: { fileSize: MAX_VIDEO_SIZE }
+});
 
 app.post('/api/admin/images', requireAdmin, upload.single('image'), (req, res) => {
     if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
@@ -94,11 +123,28 @@ const DB_PATH = path.join(__dirname, 'gallery.db');
 const db = new sqlite3.Database(DB_PATH);
 
 function initDbAndPopulate() {
+    // Create blog-assets directory if it doesn't exist
+    const blogDir = path.join(__dirname, 'blog-assets');
+    if (!fs.existsSync(blogDir)) {
+        fs.mkdirSync(blogDir, { recursive: true });
+    }
+
     db.serialize(() => {
         db.run(`CREATE TABLE IF NOT EXISTS images (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       path TEXT NOT NULL,
       description TEXT
+    )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS blog_posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      content TEXT NOT NULL,
+      image TEXT,
+      video TEXT,
+      embedded_video TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 
         db.get('SELECT COUNT(*) as count FROM images', (err, row) => {
@@ -135,6 +181,72 @@ app.get('/api/gallery', (req, res) => {
             })),
             count: rows.length,
             success: true
+        });
+    });
+});
+
+// Blog API endpoints
+app.post('/api/admin/blog', requireAdmin, blogUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }]), (req, res) => {
+    const { title, content, embedded_video } = req.body;
+    if (!title || !content) {
+        return res.status(400).json({ success: false, error: 'Title and content are required' });
+    }
+
+    const image = req.files && req.files.image ? `/blog-assets/${path.basename(req.files.image[0].path)}` : null;
+    const video = req.files && req.files.video ? `/blog-assets/${path.basename(req.files.video[0].path)}` : null;
+
+    db.run('INSERT INTO blog_posts (title, content, image, video, embedded_video) VALUES (?, ?, ?, ?, ?)',
+        [title, content, image, video, embedded_video || null],
+        function (err) {
+            if (err) return res.status(500).json({ success: false, error: 'DB error: ' + err.message });
+            res.json({ success: true, id: this.lastID });
+        });
+});
+
+app.get('/api/blog', (req, res) => {
+    db.all('SELECT * FROM blog_posts ORDER BY created_at DESC', (err, rows) => {
+        if (err) {
+            console.error('DB error:', err);
+            return res.status(500).json({ error: 'Failed to load blog posts', success: false });
+        }
+        res.json({ posts: rows, count: rows.length, success: true });
+    });
+});
+
+app.put('/api/admin/blog/:id', requireAdmin, blogUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'video', maxCount: 1 }]), (req, res) => {
+    const { title, content, embedded_video } = req.body;
+    if (!title || !content) {
+        return res.status(400).json({ success: false, error: 'Title and content are required' });
+    }
+
+    const image = req.files && req.files.image ? `/blog-assets/${path.basename(req.files.image[0].path)}` : req.body.image;
+    const video = req.files && req.files.video ? `/blog-assets/${path.basename(req.files.video[0].path)}` : req.body.video;
+
+    db.run('UPDATE blog_posts SET title = ?, content = ?, image = ?, video = ?, embedded_video = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+        [title, content, image, video, embedded_video || null, req.params.id],
+        function (err) {
+            if (err) return res.status(500).json({ success: false, error: 'DB error' });
+            res.json({ success: true });
+        });
+});
+
+app.delete('/api/admin/blog/:id', requireAdmin, (req, res) => {
+    db.get('SELECT image, video FROM blog_posts WHERE id = ?', [req.params.id], (err, row) => {
+        if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
+
+        // Delete associated files
+        if (row.image) {
+            const imagePath = path.join(__dirname, row.image);
+            fs.unlink(imagePath, () => { });
+        }
+        if (row.video) {
+            const videoPath = path.join(__dirname, row.video);
+            fs.unlink(videoPath, () => { });
+        }
+
+        db.run('DELETE FROM blog_posts WHERE id = ?', [req.params.id], function (err2) {
+            if (err2) return res.status(500).json({ success: false, error: 'DB error' });
+            res.json({ success: true });
         });
     });
 });

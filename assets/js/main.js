@@ -6,95 +6,70 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // Navbar scroll behavior
-  const navbar = document.querySelector('.navbar');
+  function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
 
-  // Check if we're on the gallery page (no hero section)
-  const isGalleryPage = !document.querySelector('.hero');
-
-  window.addEventListener('scroll', () => {
-    // On gallery page, always keep navbar scrolled state
-    if (isGalleryPage) {
-      navbar.classList.add('scrolled');
+    // If navbar is not loaded yet, wait a bit and try again
+    if (!navbar) {
+      setTimeout(initNavbarScroll, 100);
       return;
     }
 
-    // On main page, apply normal scroll behavior
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
+    // Check if we're on the gallery or blog page (no hero section)
+    const isGalleryPage = !document.querySelector('.hero');
 
-  // Navbar active link switching
-  const navLinks = document.querySelectorAll('.navbar ul li a');
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', function () {
-      navLinks.forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-
-  // Hamburger menu for mobile with overlay and color toggle
-  const hamburger = document.getElementById('hamburger');
-  const navUl = document.getElementById('nav-links');
-  const menuOverlay = document.getElementById('mobileMenuOverlay');
-
-  function openMenu() {
-    navUl.classList.add('open');
-    hamburger.classList.add('open');
-    hamburger.setAttribute('aria-expanded', 'true');
-    if (menuOverlay) menuOverlay.classList.add('active');
-  }
-  function closeMenu() {
-    navUl.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    if (menuOverlay) menuOverlay.classList.remove('active');
-  }
-
-  hamburger.addEventListener('click', () => {
-    if (navUl.classList.contains('open')) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  });
-
-  if (menuOverlay) {
-    menuOverlay.addEventListener('click', closeMenu);
-  }
-
-  // Close nav on link click (mobile)
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 800) {
-        closeMenu();
+    window.addEventListener('scroll', () => {
+      // On gallery/blog page, always keep navbar scrolled state
+      if (isGalleryPage) {
+        if (navbar) navbar.classList.add('scrolled');
+        return;
       }
-    });
-  });
 
-  // Smooth scrolling for navigation links
-  navLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-
-      if (href.startsWith('#')) {
-        e.preventDefault();
-        const targetId = href.substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-          const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
+      // On main page, apply normal scroll behavior
+      if (navbar) {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
         }
       }
     });
-  });
+  }
+
+  // Initialize navbar scroll
+  initNavbarScroll();
+
+  // Smooth scrolling for navigation links
+  function initSmoothScroll() {
+    const navLinks = document.querySelectorAll('.navbar ul li a');
+
+    if (!navLinks || navLinks.length === 0) {
+      setTimeout(initSmoothScroll, 100);
+      return;
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            const offsetTop = targetElement.offsetTop - 80; // Account for fixed navbar
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  }
+
+  initSmoothScroll();
 
   // Banner column click handlers (for future functionality)
   const bannerColumns = document.querySelectorAll('.banner-column');
@@ -122,68 +97,95 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Floating contact bar functionality
-  const floatingBar = document.getElementById('floating-bar');
-  const contactToggle = document.getElementById('contact-toggle');
-  const contactIcons = document.getElementById('contact-icons');
+  function initFloatingContact() {
+    const floatingBar = document.getElementById('floating-bar');
+    const contactToggle = document.getElementById('contact-toggle');
+    const contactIcons = document.getElementById('contact-icons');
 
-  // Toggle contact bar visibility
-  contactToggle.addEventListener('click', function () {
-    contactIcons.classList.toggle('expanded');
-    this.classList.toggle('expanded');
-  });
-
-  // Auto-collapse when clicking outside
-  document.addEventListener('click', function (e) {
-    if (!floatingBar.contains(e.target)) {
-      contactIcons.classList.remove('expanded');
-      contactToggle.classList.remove('expanded');
+    // If floating contact is not present, skip initialization
+    if (!floatingBar || !contactToggle || !contactIcons) {
+      return;
     }
-  });
 
-  // Auto-collapse on mobile after 3 seconds of inactivity
-  let mobileTimeout;
-  if (window.innerWidth <= 768) {
-    mobileTimeout = setTimeout(() => {
-      contactIcons.classList.remove('expanded');
-      contactToggle.classList.remove('expanded');
-    }, 3000);
+    // Toggle contact bar visibility
+    contactToggle.addEventListener('click', function () {
+      contactIcons.classList.toggle('expanded');
+      this.classList.toggle('expanded');
+    });
+
+    // Auto-collapse when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!floatingBar.contains(e.target)) {
+        contactIcons.classList.remove('expanded');
+        contactToggle.classList.remove('expanded');
+      }
+    });
+
+    // Auto-collapse on mobile after 3 seconds of inactivity
+    let mobileTimeout;
+    if (window.innerWidth <= 768) {
+      mobileTimeout = setTimeout(() => {
+        contactIcons.classList.remove('expanded');
+        contactToggle.classList.remove('expanded');
+      }, 3000);
+    }
+
+    // Reset timeout on interaction
+    floatingBar.addEventListener('mouseenter', function () {
+      if (mobileTimeout) {
+        clearTimeout(mobileTimeout);
+      }
+    });
   }
 
-  // Reset timeout on interaction
-  floatingBar.addEventListener('mouseenter', function () {
-    if (mobileTimeout) {
-      clearTimeout(mobileTimeout);
-    }
-  });
+  // Initialize floating contact
+  initFloatingContact();
 
   // Add loading animation class to body
   document.body.classList.add('loaded');
 
-  // Scrollspy: highlight nav link for section in view
-  const sectionIds = ['home', 'about', 'gallery'];
-  const sectionElements = sectionIds.map(id => document.getElementById(id));
-  const navLinkMap = {};
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      const id = href.substring(1);
-      navLinkMap[id] = link;
-    }
-  });
+  // Scrollspy: highlight nav link for section in view (only on pages with sections)
+  function initScrollSpy() {
+    const navLinks = document.querySelectorAll('.navbar ul li a');
 
-  function onScrollSpy() {
-    let current = sectionIds[0];
-    const scrollY = window.scrollY + 100; // Offset for fixed navbar
-    for (let i = 0; i < sectionElements.length; i++) {
-      const section = sectionElements[i];
-      if (section && section.offsetTop <= scrollY) {
-        current = sectionIds[i];
-      }
+    if (!navLinks || navLinks.length === 0) {
+      setTimeout(initScrollSpy, 100);
+      return;
     }
-    navLinks.forEach(link => link.classList.remove('active'));
-    if (navLinkMap[current]) navLinkMap[current].classList.add('active');
+
+    const sectionIds = ['home', 'about', 'gallery'];
+    const sectionElements = sectionIds.map(id => document.getElementById(id));
+    const navLinkMap = {};
+
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const id = href.substring(1);
+        navLinkMap[id] = link;
+      }
+    });
+
+    function onScrollSpy() {
+      let current = sectionIds[0];
+      const scrollY = window.scrollY + 100; // Offset for fixed navbar
+      for (let i = 0; i < sectionElements.length; i++) {
+        const section = sectionElements[i];
+        if (section && section.offsetTop <= scrollY) {
+          current = sectionIds[i];
+        }
+      }
+      navLinks.forEach(link => link.classList.remove('active'));
+      if (navLinkMap[current]) navLinkMap[current].classList.add('active');
+    }
+
+    // Only initialize scrollspy if we're on a page with sections
+    const hasSections = sectionElements.some(el => el !== null);
+    if (hasSections) {
+      window.addEventListener('scroll', onScrollSpy);
+      onScrollSpy();
+    }
   }
-  window.addEventListener('scroll', onScrollSpy);
-  onScrollSpy();
+
+  initScrollSpy();
 
 });

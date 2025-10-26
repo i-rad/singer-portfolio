@@ -1,0 +1,68 @@
+{
+    "nav": {
+        "home": "Startseite",
+        "about": "Über mich",
+        "gallery": "Galerie",
+        "blog": "Blog"
+    },
+    "home": {
+        "title": "Petras Musik Atelier",
+        "tagline": "Musik & Gesang in Harmonie",
+        "watch": "ANSEHEN",
+        "musicVideos": "Musikvideos",
+        "book": "BUCHEN",
+        "forEvent": "Für Eine Veranstaltung",
+        "lessons": {
+            "title": "Bereit, Ihre musikalische Reise zu beginnen?",
+            "paragraph1": "Sie haben noch nie Klavier gespielt und möchten eine Stunde bei mir buchen?\nOder möchten Sie vielleicht jemandem eine Stunde schenken – denn Musik ist wirklich ein schönes Geschenk!\nOder möchten Sie stattdessen lieber Singen erkunden? Warum nicht!",
+            "paragraph2": "Wenn ich nicht auftrete, unterrichte ich – und ich würde Ihnen gerne dabei helfen, den ersten Schritt in die Welt der Musik zu machen.",
+            "button": "Klicken Sie hier, um eine Stunde zu buchen",
+            "subtext": "Erfahren Sie, wie wir zusammenarbeiten können, um Ihre Stimme, Ihr Selbstvertrauen und Ihren musikalischen Ausdruck zu entwickeln."
+        },
+        "gallery": {
+            "title": "Galerie",
+            "button": "Vollständige Galerie ansehen"
+        }
+    },
+    "gallery": {
+        "title": "Galerie",
+        "subtitle": "Eine Sammlung von Momenten und Erinnerungen",
+        "backButton": "Zurück zur Startseite"
+    },
+    "about": {
+        "title": "Über mich",
+        "subtitle": "Lernen Sie mich kennen",
+        "backButton": "Zurück zur Startseite",
+        "invitation": {
+            "monogram": "P M A",
+            "title": "Eine Stimme für Ihre Hochzeit",
+            "subtitle": "Zeitlos • Elegant • Persönlich",
+            "introParagraph": "Schließen Sie für einen Moment die Augen und stellen Sie sich vor…\n\nEinen Tag in Ihrem Leben, den Sie für immer in Erinnerung behalten werden.\nSie stehen einander gegenüber — Ihre Herzen schlagen schneller, und vielleicht rollt Ihnen eine Freudenträne über die Wange.\nLiebe, festgehalten in der Zeit, umgeben von der Freude und den Gebeten Ihrer Liebsten.",
+            "quote": {
+                "line1": "Ihr einziges Wort ist „Ja\",",
+                "line2": "während alles andere durch meine Stimme und Musik erzählt wird."
+            },
+            "aboutPetra": {
+                "paragraph1": "Ich bin Petra Golubović Jez, eine leidenschaftliche Sängerin mit einer tiefen Liebe zur Schaffung berührender und zeitloser Darbietungen.\nEs erfüllt mich mit Freude, durch Musik eine Verbindung zu Menschen herzustellen und Momente zu schaffen, die für immer im Herzen bleiben.",
+                "paragraph2": "Mit jahrelanger Erfahrung in Live-Auftritten und Ausbildung in moderner Gesangstechnik\nbringe ich eine einzigartige Mischung aus stimmlicher Meisterschaft und emotionaler Tiefe in jedes Lied, das ich singe.",
+                "paragraph3": "Die Musik begleitet mich schon mein ganzes Leben – von meinen frühen Klaviertagen bis zu der Erkenntnis, dass das Singen meine wahre Berufung ist.\nNach meinem Bachelor-Abschluss an der Musikakademie in Bosnien habe ich in zahlreichen Ensembles gesungen und auf halbem Weg um die Welt aufgetreten – von New York bis zur Sydney Opera.\nDiese Lebenserfahrungen haben mich gelehrt, mich tief mit meinen Emotionen zu verbinden – etwas, das in jeder meiner Interpretationen spürbar ist.",
+                "paragraph4": "Doch das wichtigste Erlebnis meines Lebens ist, dass ich – neben der Musik – die wahre Liebe gefunden habe und sie jeden Tag lebe.\nIch trage sie in meiner Stimme und forme mit ihr jede Note Ihrer Feier, um einen magischen Moment zu erschaffen, der für immer in Erinnerung bleibt."
+            },
+            "cta": {
+                "button": "RSVP · Eine Darbietung buchen",
+                "note": "Lassen Sie uns eine Zeremonie gestalten, die wie Ihre Liebesgeschichte klingt."
+            }
+        }
+    },
+    "blog": {
+        "title": "Blog",
+        "subtitle": "Geschichten, Updates und Einblicke",
+        "backButton": "Zurück zur Startseite",
+        "noPosts": "Noch keine Blog-Beiträge",
+        "checkBack": "Schauen Sie bald wieder vorbei für Updates und Geschichten!",
+        "loading": "Lade Blog-Beiträge..."
+    },
+    "footer": {
+        "copyright": "© 2025 Petras Musik Atelier. Alle Rechte vorbehalten."
+    }
+}

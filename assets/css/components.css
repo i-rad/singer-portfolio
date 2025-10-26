@@ -8,8 +8,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: transparent;
-  box-shadow: none;
+  background: var(--nav-bg);
+  box-shadow: var(--nav-shadow);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -24,23 +24,61 @@
 }
 
 .navbar .logo {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Great Vibes', cursive;
   font-weight: 400;
   font-size: 1.5rem;
-  color: var(--white);
+  color: var(--ruby);
   letter-spacing: 2px;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .navbar.scrolled .logo {
-  color: var(--primary);
+  color: var(--ruby);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Hide mobile language toggle on desktop */
+.language-toggle-mobile {
+  display: none;
 }
 
 .navbar ul {
   list-style: none;
   display: flex;
   gap: 2rem;
+}
+
+.language-toggle {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid var(--ruby);
+  border-radius: 20px;
+  padding: 0.2rem;
+  background: var(--rose-ivory);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--ruby);
+  cursor: pointer;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+  background: var(--ruby);
+  color: var(--almond);
 }
 
 .navbar ul li {
@@ -50,7 +88,7 @@
 .navbar ul li a {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
-  color: var(--white);
+  color: var(--ruby);
   text-decoration: none;
   font-size: 1.05rem;
   padding: 0.3rem 0;
@@ -59,7 +97,7 @@
 }
 
 .navbar.scrolled ul li a {
-  color: var(--primary);
+  color: var(--ruby);
 }
 
 .navbar ul li a::after {
@@ -69,12 +107,12 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--white);
+  background: var(--ruby);
   transition: width 0.3s ease;
 }
 
 .navbar.scrolled ul li a::after {
-  background: var(--primary);
+  background: var(--ruby);
 }
 
 .navbar ul li a.active::after,
@@ -98,13 +136,13 @@
 .navbar .hamburger span {
   width: 25px;
   height: 3px;
-  background: var(--white);
+  background: var(--ruby);
   border-radius: 2px;
   transition: all 0.3s;
 }
 
 .navbar.scrolled .hamburger span {
-  background: var(--primary);
+  background: var(--ruby);
 }
 
 /* Sound Wave Animation */
@@ -119,7 +157,7 @@
 
 .wave-bar {
   width: 3px;
-  background: var(--cocoa);
+  background: var(--ruby);
   border-radius: 2px;
   animation: wave 1.5s ease-in-out infinite;
 }
@@ -170,7 +208,7 @@
 
 .microphone-icon i {
   font-size: 1.2rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   animation: pulse 2s ease-in-out infinite;
 }
 
@@ -201,20 +239,14 @@
 .hero {
   width: 100%;
   height: 100vh;
-  background: url('../../images/2.jpg') center center/cover no-repeat;
+  background: url('../../images/image00010.jpeg') center center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-bottom: 0;
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(62, 51, 51, 0.6) 0%, rgba(94, 63, 68, 0.4) 50%, rgba(164, 126, 130, 0.3) 100%);
-  z-index: 1;
-}
 
 .hero-content {
   position: relative;
@@ -224,12 +256,12 @@
 }
 
 .hero-content h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'MonteCarlo', cursive;
   font-weight: 400;
   font-size: 3.5rem;
   letter-spacing: 2px;
   margin-bottom: 0;
-  text-shadow: 0 2px 8px rgba(62, 51, 51, 0.18);
+  text-shadow: 0 2px 8px rgba(102, 2, 31, 0.18);
 }
 
 /* Hero Banner */
@@ -241,10 +273,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(240, 231, 226, 0.95);
+  background: var(--rose-ivory);
   padding: 1.5rem 0;
   width: 100%;
-  box-shadow: 0 -4px 12px rgba(62, 51, 51, 0.15);
+  box-shadow: 0 -4px 12px rgba(102, 2, 31, 0.15);
   z-index: 3;
 }
 
@@ -268,14 +300,14 @@
   transform: translateY(-50%);
   width: 1px;
   height: 60%;
-  background: rgba(62, 51, 51, 0.2);
+  background: rgba(102, 2, 31, 0.2);
 }
 
 .banner-column h3 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 1.1rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   margin: 0 0 0.3rem 0;
   letter-spacing: 1px;
 }
@@ -284,12 +316,17 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 0.85rem;
-  color: var(--merlot);
+  color: var(--ruby);
   margin: 0;
   letter-spacing: 0.5px;
 }
 
 /* About Section */
+.about-section {
+  background: var(--almond);
+  padding: 4rem 0;
+}
+
 .about-container {
   max-width: 900px;
   margin: 0 auto;
@@ -301,13 +338,22 @@
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
+  position: relative;
+}
+
+.about-text {
+  position: relative;
+}
+
+.about-image {
+  position: relative;
 }
 
 .about-text h2 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 400;
   font-size: 2.5rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   margin-bottom: 0.5rem;
   letter-spacing: 1px;
 }
@@ -316,7 +362,7 @@
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
   font-size: 1.3rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   margin-bottom: 1.5rem;
   letter-spacing: 0.5px;
 }
@@ -325,7 +371,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 1rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   line-height: 1.7;
   margin-bottom: 2rem;
 }
@@ -335,17 +381,17 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 0.85rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--cocoa);
+  border: 1px solid var(--ruby);
   background: transparent;
   transition: all 0.3s ease;
 }
 
 .about-tag:hover {
-  background: var(--cocoa);
+  background: var(--ruby);
   color: var(--almond);
 }
 
@@ -363,7 +409,7 @@
 
 /* Gallery */
 .gallery-section {
-  background: var(--peony);
+  background: var(--rose-ivory);
   width: 100%;
   padding: 2.5rem 0;
 }
@@ -391,13 +437,13 @@
 .collage-item {
   position: absolute;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(62, 51, 51, 0.15);
+  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.15);
   transition: all 0.3s ease;
 }
 
 .collage-item:hover {
   transform: scale(1.05) rotate(2deg);
-  box-shadow: 0 8px 25px rgba(62, 51, 51, 0.25);
+  box-shadow: 0 8px 25px rgba(102, 2, 31, 0.25);
   z-index: 10;
 }
 
@@ -455,10 +501,10 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 1rem;
-  color: var(--cocoa);
+  color: var(--ruby);
   text-decoration: none;
   padding: 1rem 2rem;
-  border: 2px solid var(--cocoa);
+  border: 2px solid var(--ruby);
   background: transparent;
   transition: all 0.3s ease;
   letter-spacing: 1px;
@@ -466,10 +512,116 @@
 }
 
 .gallery-button:hover {
-  background: var(--cocoa);
+  background: var(--ruby);
   color: var(--almond);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(62, 51, 51, 0.2);
+  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+}
+
+/* Lessons Section */
+.lessons-section {
+  background: var(--almond);
+  width: 100%;
+  padding: 3rem 0;
+}
+
+.lessons-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.lessons-content {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.lessons-text h2 {
+  font-family: 'MonteCarlo', cursive;
+  font-weight: 400;
+  font-size: 2.4rem;
+  color: var(--ruby);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.lessons-paragraph {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  color: var(--ruby);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.lessons-cta {
+  margin-top: 1.5rem;
+}
+
+.lessons-button {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--almond);
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  background: var(--ruby);
+  border: 2px solid var(--ruby);
+  letter-spacing: 0.5px;
+  text-transform: none;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.lessons-button:hover {
+  background: transparent;
+  color: var(--ruby);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+}
+
+.lessons-subtext {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: var(--ruby);
+  margin-top: 1rem;
+}
+
+.lessons-image img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(102, 2, 31, 0.15);
+}
+
+@media (max-width: 900px) {
+  .lessons-content {
+    grid-template-columns: 1fr;
+  }
+
+  .lessons-text h2 {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .lessons-section {
+    padding: 2rem 0;
+  }
+
+  .lessons-text h2 {
+    font-size: 1.9rem;
+  }
+
+  .lessons-paragraph {
+    font-size: 0.98rem;
+  }
+
 }
 
 /* Floating Contact Bar */
@@ -478,7 +630,7 @@
   top: 80px;
   left: 24px;
   background: var(--float-bg);
-  box-shadow: 0 4px 20px rgba(62, 51, 51, 0.15);
+  box-shadow: 0 4px 20px rgba(102, 2, 31, 0.15);
   border-radius: 30px;
   padding: 0.8rem;
   display: flex;
@@ -489,7 +641,7 @@
 }
 
 .floating-bar:hover {
-  box-shadow: 0 8px 30px rgba(62, 51, 51, 0.25);
+  box-shadow: 0 8px 30px rgba(102, 2, 31, 0.25);
 }
 
 .contact-toggle {
@@ -498,7 +650,7 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: var(--cocoa);
+  background: var(--ruby);
   color: var(--almond);
   border-radius: 50%;
   cursor: pointer;
@@ -508,7 +660,7 @@
 }
 
 .contact-toggle:hover {
-  background: var(--merlot);
+  background: var(--ruby);
   transform: scale(1.1);
 }
 
@@ -535,7 +687,7 @@
 }
 
 .floating-bar a {
-  color: var(--merlot);
+  color: var(--ruby);
   font-size: 1.5rem;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -547,7 +699,7 @@
   border-radius: 50%;
   position: relative;
   background: var(--float-bg);
-  box-shadow: 0 2px 8px rgba(62, 51, 51, 0.1);
+  box-shadow: 0 2px 8px rgba(102, 2, 31, 0.1);
   flex-shrink: 0;
 }
 
@@ -567,7 +719,7 @@
 
 .floating-bar a:hover {
   transform: scale(1.15);
-  box-shadow: 0 4px 15px rgba(62, 51, 51, 0.2);
+  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
 }
 
 .floating-bar a:hover i {
@@ -613,5 +765,23 @@
     font-size: 1.3rem;
     width: 40px;
     height: 40px;
+  }
+
+  .about-section {
+    padding: 3rem 0;
+  }
+
+  .about-content::before,
+  .about-content::after {
+    display: none;
+  }
+
+  .about-text::before {
+    display: none;
+  }
+
+  .about-image::before,
+  .about-image::after {
+    display: none;
   }
 }

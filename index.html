@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Petra Golubovic | Singer</title>
+  <title>Petras Music Atelier</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@100;300;400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Italianno&family=MonteCarlo&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Tangerine:wght@400;700&display=swap"
     rel="stylesheet">
 
   <!-- Icons -->
@@ -22,53 +22,16 @@
   <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 
-<body>
+<body data-page="home">
   <!-- Overlay for mobile menu -->
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-  <!-- Floating Contact Bar -->
-  <div class="floating-bar" id="floating-bar">
-    <div class="contact-toggle" id="contact-toggle">
-      <i class="fas fa-plus"></i>
-    </div>
-    <div class="contact-icons" id="contact-icons">
-      <a href="mailto:your.email@example.com" target="_blank" title="Email Me" class="email">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="tel:+1234567890" title="Call Me" class="phone">
-        <i class="fas fa-phone"></i>
-      </a>
-      <a href="https://instagram.com/yourusername" target="_blank" title="Instagram" class="instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://facebook.com/yourusername" target="_blank" title="Facebook" class="facebook">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://wa.me/1234567890" target="_blank" title="WhatsApp" class="whatsapp">
-        <i class="fab fa-whatsapp"></i>
-      </a>
-    </div>
-  </div>
 
-  <!-- Navigation -->
-  <nav class="navbar">
-    <a href="#home" class="logo">Petra Golubovic</a>
-    <ul id="nav-links">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-    </ul>
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </nav>
+  <!-- Component containers -->
+  <div id="floating-contact-container"></div>
+  <div id="navbar-container"></div>
 
   <!-- Hero Section -->
   <section class="hero" id="home">
-    <div class="hero-content">
-      <h1>Petra Golubovic</h1>
-    </div>
     <div class="hero-banner">
       <div class="banner-column">
         <div class="sound-wave">
@@ -78,82 +41,78 @@
           <div class="wave-bar"></div>
           <div class="wave-bar"></div>
         </div>
-        <h3>LISTEN</h3>
-        <p>Stream Music</p>
-      </div>
-      <div class="banner-column">
-        <h3>WATCH</h3>
-        <p>Music Videos</p>
+        <h3 data-i18n="home.watch">WATCH</h3>
+        <p data-i18n="home.musicVideos">Music Videos</p>
       </div>
       <div class="banner-column">
         <div class="microphone-icon">
           <i class="fas fa-microphone"></i>
         </div>
-        <h3>BOOK</h3>
-        <p>For An Event</p>
+        <h3 data-i18n="home.book">BOOK</h3>
+        <p data-i18n="home.forEvent">For An Event</p>
       </div>
     </div>
   </section>
 
-  <!-- Main Content -->
-  <main>
-  </main>
-
-  <!-- About Section -->
-  <section id="about">
-    <div class="about-container">
-      <div class="about-content">
-        <div class="about-text">
-          <h2>ABOUT ME</h2>
-          <h3 class="about-name">Petra Golubovic</h3>
-          <p>
-            Hi! I'm Petra Golubovic, a passionate singer with a love for creating beautiful, memorable performances. I
-            enjoy
-            connecting with audiences through music and creating unforgettable experiences at every event. With years of
-            experience in live performances and studio recordings, I bring a unique blend of technical skill and
-            emotional expression to every song.
+  <!-- Lessons Section -->
+  <section id="lessons" class="lessons-section">
+    <div class="lessons-container">
+      <div class="lessons-content">
+        <div class="lessons-text">
+          <h2 data-i18n="home.lessons.title">Ready to start your musical journey?</h2>
+          <p class="lessons-paragraph" data-i18n="home.lessons.paragraph1">
+            You've never played piano before and want to book a lesson with me?
+            Or maybe you'd love to gift someone a lesson — because music truly is a beautiful gift!
+            Or perhaps you'd rather explore singing instead? Why not!
           </p>
-          <div class="about-tag">SINGER</div>
+          <p class="lessons-paragraph" data-i18n="home.lessons.paragraph2">
+            When I'm not performing, I teach — and I'd love to help you take your first step into the world of music.
+          </p>
+          <div class="lessons-cta">
+            <a href="mailto:your.email@example.com?subject=Book%20a%20lesson" class="gallery-button"
+              data-i18n="home.lessons.button">Click here to book a lesson</a>
+            <div class="lessons-subtext" data-i18n="home.lessons.subtext">Find out how we can work together to develop
+              your voice, confidence, and musical expression.</div>
+          </div>
         </div>
-        <div class="about-image">
-          <img src="./images/1.jpg" alt="Petra Golubovic - Singer">
+        <div class="lessons-image">
+          <img src="./images/image00001.jpeg" alt="Piano lessons and singing lessons">
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- Gallery Section -->
   <section id="gallery" class="gallery-section">
     <div class="gallery-container">
-      <h2>Gallery</h2>
+      <h2 data-i18n="home.gallery.title">Gallery</h2>
       <div class="gallery-collage">
         <div class="collage-item collage-item-1">
-          <img src="./images/1.jpg" alt="Gallery Image 1">
+          <img src="./images/image00003.jpeg" alt="Gallery Image 1">
         </div>
         <div class="collage-item collage-item-2">
-          <img src="./images/3.jpg" alt="Gallery Image 2">
+          <img src="./images/image00119.jpg" alt="Gallery Image 2">
         </div>
         <div class="collage-item collage-item-3">
-          <img src="./images/4.jpg" alt="Gallery Image 3">
+          <img src="./images/image00007.jpeg" alt="Gallery Image 3">
         </div>
         <div class="collage-item collage-item-4">
-          <img src="./images/5.jpg" alt="Gallery Image 4">
+          <img src="./images/4.jpg" alt="Gallery Image 4">
         </div>
       </div>
       <div class="gallery-cta">
-        <a href="./gallery.html" class="gallery-button">View Full Gallery</a>
+        <a href="./gallery.html" class="gallery-button" data-i18n="home.gallery.button">View Full Gallery</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-content">
-      © 2025 Petra Golubovic. All rights reserved.
-    </div>
-  </footer>
+  <!-- Footer container -->
+  <div id="footer-container"></div>
 
   <!-- Scripts -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/components.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 
