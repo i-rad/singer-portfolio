@@ -27,7 +27,9 @@
     "gallery": {
         "title": "Galerie",
         "subtitle": "Eine Sammlung von Momenten und Erinnerungen",
-        "backButton": "Zurück zur Startseite"
+        "backButton": "Zurück zur Startseite",
+        "noImages": "Keine Bilder gefunden",
+        "loading": "Lade Galerie..."
     },
     "about": {
         "title": "Über mich",

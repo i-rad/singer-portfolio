@@ -5,8 +5,16 @@
 document.addEventListener('DOMContentLoaded', function () {
   const galleryGrid = document.getElementById('gallery-grid');
 
+  // Function to get translated text
+  function t(key) {
+    if (window.i18n) {
+      return window.i18n.get(key);
+    }
+    return key;
+  }
+
   // Show loading state
-  galleryGrid.innerHTML = '<div class="gallery-loading">Loading gallery...</div>';
+  galleryGrid.innerHTML = `<div class="gallery-loading">${t('gallery.loading')}</div>`;
 
   // Function to fetch images from the backend API
   async function fetchGalleryImages() {
@@ -51,8 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (images.length === 0) {
         // Show message if no images found
         galleryGrid.innerHTML = `
-          <div class="gallery-loading">
-            <p>No images found in the gallery.</p>
+          <div class="gallery-empty">
+            <h2>${t('gallery.noImages')}</h2>
+            <p>${t('gallery.subtitle')}</p>
           </div>
         `;
         return;

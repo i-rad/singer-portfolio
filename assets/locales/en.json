@@ -27,7 +27,9 @@
     "gallery": {
         "title": "Gallery",
         "subtitle": "A collection of moments and memories",
-        "backButton": "Back to Home"
+        "backButton": "Back to Home",
+        "noImages": "No images found",
+        "loading": "Loading gallery..."
     },
     "about": {
         "title": "About",

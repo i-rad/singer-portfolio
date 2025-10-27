@@ -134,6 +134,28 @@
   font-weight: 300;
 }
 
+/* Empty State */
+.gallery-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--ruby);
+}
+
+.gallery-empty h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--ruby);
+}
+
+.gallery-empty p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .gallery-header {
