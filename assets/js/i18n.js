@@ -130,17 +130,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Wait for navbar to be loaded and ensure language toggle is updated
     setTimeout(() => {
+        i18n.updatePage(); // Update page content with translations
         addLanguageToggleListeners();
         i18n.updateLanguageToggle();
     }, 300);
 });
 
-// Also initialize when navbar is loaded via components
+// Update page content and language toggle when page fully loads
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        i18n.updateLanguageToggle();
-        addLanguageToggleListeners();
-    }, 100);
+    i18n.updatePage();
+    i18n.updateLanguageToggle();
 });
 
 function addLanguageToggleListeners() {
@@ -185,17 +184,32 @@ function addLanguageToggleListeners() {
     }
 }
 
-// Watch for navbar component loading and re-add listeners
-const observer = new MutationObserver(() => {
-    const deButton = document.getElementById('lang-de');
-    const enButton = document.getElementById('lang-en');
-    if (deButton || enButton) {
-        addLanguageToggleListeners();
-        i18n.updateLanguageToggle();
-    }
-});
+// Watch for navbar component loading and re-add listeners only when needed
+let listenersAdded = false;
 
-observer.observe(document.body, { childList: true, subtree: true });
+const initObserver = () => {
+    const observer = new MutationObserver(() => {
+        const deButton = document.getElementById('lang-de');
+        const enButton = document.getElementById('lang-en');
+        const deButtonMobile = document.getElementById('lang-de-mobile');
+        const enButtonMobile = document.getElementById('lang-en-mobile');
+
+        // Only add listeners ONCE when buttons first appear
+        if (!listenersAdded && (deButton || enButton || deButtonMobile || enButtonMobile)) {
+            addLanguageToggleListeners();
+            listenersAdded = true;
+        }
+    });
+
+    // Observe only the navbar container instead of entire body
+    const navbarContainer = document.getElementById('navbar-container');
+    if (navbarContainer) {
+        observer.observe(navbarContainer, { childList: true, subtree: true });
+    }
+};
+
+// Initialize observer
+initObserver();
 
 // Export for use in other scripts
 window.i18n = i18n;

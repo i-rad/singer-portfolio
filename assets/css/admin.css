@@ -1,7 +1,7 @@
 /* Admin Panel Styles - matches site tone */
 .admin-panel {
     background: var(--white, #fff);
-    border-radius: 12px;
+    border-radius: 0;
     box-shadow: 0 2px 16px #0001;
     padding: 2rem;
     margin: 2rem auto;
@@ -93,14 +93,14 @@
 
 .admin-gallery-table img {
     max-width: 80px;
-    border-radius: 6px;
+    border-radius: 0;
     box-shadow: 0 1px 6px #0001;
 }
 
 .admin-gallery-table input[type="text"] {
     width: 100%;
     padding: 0.4rem;
-    border-radius: 4px;
+    border-radius: 0;
     border: 1px solid #ccc;
     font-size: 1rem;
 }
@@ -109,7 +109,7 @@
     background: var(--accent, #66021F);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     padding: 0.4rem 0.8rem;
     font-size: 1rem;
     cursor: pointer;
@@ -143,7 +143,7 @@
 .admin-upload-form textarea {
     font-size: 1rem;
     padding: 0.4rem;
-    border-radius: 4px;
+    border-radius: 0;
     border: 1px solid #ccc;
     font-family: 'Montserrat', sans-serif;
 }
@@ -158,7 +158,7 @@
     background: var(--accent, #66021F);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     padding: 0.5rem 1.2rem;
     font-size: 1rem;
     cursor: pointer;
@@ -180,7 +180,7 @@ body {
 
 .admin-form {
     background: var(--white, #fff);
-    border-radius: 14px;
+    border-radius: 0;
     box-shadow: 0 4px 32px #0002;
     padding: 2.5rem 2rem 2rem 2rem;
     margin: 0 auto 2rem auto;
@@ -195,7 +195,7 @@ body {
 .admin-form input[type="password"] {
     padding: 0.9rem;
     font-size: 1.1rem;
-    border-radius: 8px;
+    border-radius: 0;
     border: 1.5px solid var(--rose-ivory, #FFE9EC);
     background: var(--rose-ivory, #FFE9EC);
     outline: none;
@@ -209,7 +209,7 @@ body {
 .admin-form button {
     padding: 0.9rem;
     font-size: 1.1rem;
-    border-radius: 8px;
+    border-radius: 0;
     background: linear-gradient(90deg, var(--accent, #66021F), var(--primary, #66021F));
     color: #fff;
     border: none;
@@ -239,7 +239,7 @@ body {
     background: var(--primary, #66021F);
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
@@ -263,7 +263,7 @@ body {
     border: 1px solid var(--rose-ivory);
     padding: 1rem;
     margin-bottom: 1rem;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .blog-post-item h3 {

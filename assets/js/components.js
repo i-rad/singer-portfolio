@@ -103,11 +103,12 @@ class ComponentLoader {
                         this.initMobileMenu();
                         // Initialize navbar scroll effect
                         this.initNavbarScroll();
-                        // Update language toggle state
+                        // Update language toggle state and page content
                         if (window.i18n) {
                             setTimeout(() => {
-                                window.i18n.updateLanguageToggle();
-                            }, 50);
+                                window.i18n.updatePage(); // Ensure page content is translated first
+                                window.i18n.updateLanguageToggle(); // Then update toggle state
+                            }, 100);
                         }
                     }
                 }

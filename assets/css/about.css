@@ -2,69 +2,75 @@
    ABOUT PAGE STYLESHEET
    =================================== */
 
-/* About Page Layout */
+/* About Page Layout - Editorial Wedding */
 .about-page {
-    background: var(--almond);
+    background: var(--pearl-white);
     min-height: 100vh;
     padding-top: 0px;
+    margin-top: 10%;
     /* Account for fixed navbar */
 }
 
-/* About Hero Section */
+/* About Hero Section - Typography Focus */
 .about-hero {
-    background: var(--rose-ivory);
-    padding: 8rem 0 4rem 0;
+    background: var(--powder);
+    padding: 120px 0 80px;
     margin-top: 0;
     text-align: center;
+    border-bottom: 1px solid rgba(59, 59, 59, 0.08);
 }
 
 .about-hero-content h1 {
-    font-family: 'MonteCarlo', cursive;
-    font-weight: 400;
-    font-size: 3.5rem;
-    color: var(--ruby);
-    margin-bottom: 1rem;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 8px rgba(102, 2, 31, 0.18);
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
 }
 
 .about-hero-content p {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 1.1rem;
-    color: var(--ruby);
-    margin-bottom: 2rem;
-    letter-spacing: 1px;
+    font-family: var(--font-accent);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    color: var(--primary);
+    margin-bottom: 3rem;
+    letter-spacing: 0.02em;
+    opacity: 0.9;
 }
 
+/* Editorial button styling - Dusty Pink accent */
 .back-button {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
+    gap: 0.75rem;
+    font-family: var(--font-body);
+    font-weight: 500;
     font-size: 0.9rem;
-    color: var(--ruby);
+    color: var(--primary);
     text-decoration: none;
-    padding: 0.8rem 1.5rem;
-    border: 1px solid var(--ruby);
+    padding: 1.1rem 2.5rem;
+    border: 2px solid var(--dusty-pink);
     background: transparent;
     transition: all 0.3s ease;
-    letter-spacing: 1px;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
+    border-radius: 0;
 }
 
 .back-button:hover {
-    background: var(--ruby);
-    color: var(--almond);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+    background: var(--dusty-pink);
+    color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(59, 59, 59, 0.12);
 }
 
-/* About Main Section */
+/* About Main Section - Generous Whitespace */
 .about-main {
-    background: var(--almond);
-    padding: 4rem 0;
+    background: var(--pearl-white);
+    padding: 100px 0;
 }
 
 .about-container {
@@ -73,88 +79,98 @@
     padding: 0 2rem;
 }
 
-/* Wedding Invitation Card */
+/* Wedding Invitation Card - Editorial Treatment */
 .invitation-wrap {
-    background: var(--almond);
-    border: 2px solid var(--ruby);
-    padding: 2rem;
+    background: var(--powder);
+    border: 2px solid var(--dusty-pink);
+    padding: 4rem;
+    box-shadow: 0 8px 32px rgba(59, 59, 59, 0.08);
+    border-radius: 0;
 }
 
 .invitation-header {
     text-align: center;
-    padding: 1.5rem 1rem 0.5rem 1rem;
+    padding: 2rem 1.5rem 1rem;
 }
 
+/* Accent font for decorative monogram */
 .invitation-monogram {
-    font-family: 'Cinzel Decorative', serif;
-    letter-spacing: 6px;
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: var(--ruby);
+    font-family: var(--font-accent);
+    font-style: italic;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--primary);
 }
 
 .invitation-title {
-    font-family: 'MonteCarlo', cursive;
-    font-weight: 400;
-    font-size: 2.6rem;
-    color: var(--ruby);
-    margin: 0.5rem 0 0.25rem 0;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--primary);
+    margin: 1rem 0 0.5rem;
+    letter-spacing: 0.02em;
 }
 
 .invitation-subtitle {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 300;
-    letter-spacing: 3px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ruby);
-    font-size: 0.8rem;
+    color: var(--primary);
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 .invitation-divider {
-    height: 1px;
-    background: var(--ruby);
-    width: 160px;
-    margin: 1rem auto 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--dusty-pink), transparent);
+    width: 200px;
+    margin: 1.5rem auto 0;
+    border-radius: 0;
 }
 
 .invitation-card {
-    background: var(--almond);
-    margin: 2rem 0 0 0;
-    padding: 2rem;
+    margin: 3rem 0 0;
+    padding: 3rem;
+    border-radius: 0;
 }
 
 .invitation-quote {
-    border: 2px solid var(--ruby);
-    padding: 1.5rem 1.25rem;
-    margin: 1.5rem 0;
+    border: 2px solid var(--dusty-pink);
+    padding: 2.5rem 2rem;
+    margin: 2.5rem 0;
     text-align: center;
     position: relative;
-    background: var(--almond);
+    background: var(--pearl-white);
+    border-radius: 0;
+    box-shadow: 0 4px 20px rgba(59, 59, 59, 0.06);
 }
 
 
 .invitation-quote::after {
     content: '❦';
     position: absolute;
-    top: -8px;
+    top: -14px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--almond);
-    color: var(--ruby);
-    font-size: 1.2rem;
-    padding: 0 0.5rem;
+    background: var(--powder);
+    color: var(--primary);
+    font-size: 1.6rem;
+    padding: 0 1rem;
 }
 
 .invitation-quote-line {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-accent);
     font-weight: 400;
-    font-size: 1.2rem;
-    color: var(--ruby);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    color: var(--primary);
     font-style: italic;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
     position: relative;
     z-index: 1;
+    opacity: 0.9;
 }
 
 .invitation-quote-line:last-child {
@@ -166,32 +182,39 @@
     padding: 1.5rem 1rem 0 1rem;
 }
 
+/* Editorial button - Dusty Pink treatment */
 .invitation-button {
     display: inline-block;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--almond);
+    font-size: 1rem;
+    color: var(--primary);
     text-decoration: none;
-    padding: 0.9rem 1.4rem;
-    background: var(--ruby);
-    border: 2px solid var(--ruby);
-    letter-spacing: 1px;
+    padding: 1.25rem 3rem;
+    background: var(--dusty-pink);
+    border: 2px solid var(--dusty-pink);
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     transition: all 0.3s ease;
+    border-radius: 0;
+    box-shadow: 0 4px 16px rgba(59, 59, 59, 0.08);
 }
 
 .invitation-button:hover {
     background: transparent;
-    color: var(--ruby);
+    color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(59, 59, 59, 0.12);
 }
 
 .invitation-note {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 300;
-    font-size: 0.9rem;
-    color: var(--ruby);
-    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--primary);
+    margin-top: 1rem;
+    opacity: 0.75;
+    letter-spacing: 0.01em;
 }
 
 .about-content {
@@ -206,13 +229,14 @@
 }
 
 .about-text p {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-weight: 300;
-    font-size: 1.1rem;
-    color: var(--ruby);
-    line-height: 1.8;
+    font-size: 1.125rem;
+    color: var(--primary);
+    line-height: 1.7;
     margin-bottom: 2.5rem;
     text-align: justify;
+    letter-spacing: 0.01em;
 }
 
 .about-tag {
@@ -244,25 +268,28 @@
     align-items: center;
 }
 
+/* Soft image layering - Editorial style */
 .about-image img {
     width: 100%;
     max-width: 500px;
     height: 500px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 8px 30px rgba(102, 2, 31, 0.15);
-    transition: transform 0.3s ease;
+    border-radius: 0;
+    box-shadow: 0 16px 48px rgba(59, 59, 59, 0.12);
+    transition: all 0.4s ease;
 }
 
 .about-image img:hover {
     transform: scale(1.02);
-    box-shadow: 0 12px 40px rgba(102, 2, 31, 0.25);
+    box-shadow: 0 24px 64px rgba(59, 59, 59, 0.18);
 }
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .about-page {
         padding-top: 0px;
+        margin-top: 10%;
+        /* Remove margin-top on mobile for about page */
     }
 
     .about-hero {
@@ -311,6 +338,24 @@
         font-size: 0.8rem;
         padding: 0.6rem 1.2rem;
         letter-spacing: 1.5px;
+    }
+
+    .invitation-button {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+        white-space: normal;
+        word-wrap: break-word;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .invitation-cta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1.5rem 1rem 0 1rem;
     }
 }
 
@@ -361,6 +406,11 @@
         padding: 0.5rem 1rem;
         letter-spacing: 1px;
     }
+
+    .invitation-button {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.85rem;
+    }
 }
 
 /* Small mobile devices */
@@ -379,5 +429,10 @@
 
     .about-image img {
         height: 250px;
+    }
+
+    .invitation-button {
+        padding: 0.85rem 1rem;
+        font-size: 0.8rem;
     }
 }

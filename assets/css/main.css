@@ -2,22 +2,42 @@
    MAIN STYLESHEET
    =================================== */
 
-/* CSS Variables - Ruby & Rose Ivory Color Palette */
+/* CSS Variables - Editorial Wedding Design System */
+/* Inspired by premium wedding brand aesthetics with elegant, airy layouts */
 :root {
-  --ruby: #66021F;
-  --rose-ivory: #FFE9EC;
-  --almond: #FFFDFA;
+  /* Color Palette - Soft Editorial Wedding */
+  --powder: #FDF5F4;
+  /* Soft background blocks */
+  --dusty-pink: #EFE2E0;
+  /* Highlight accent for buttons, hovers, accents */
+  --pearl-white: #FAF9F7;
+  /* Main background/base white */
+  --charcoal: #3B3B3B;
+  /* Main text color (warm, elegant gray) */
 
   /* Semantic color variables */
-  --primary: var(--ruby);
-  --accent: var(--ruby);
-  --bg: var(--rose-ivory);
-  --white: var(--almond);
-  --nav-bg: rgba(255, 233, 236, 0.95);
-  --nav-shadow: 0 2px 12px rgba(102, 2, 31, 0.15);
-  --nav-active: var(--ruby);
-  --float-bg: var(--almond);
-  --float-shadow: 0 2px 8px rgba(102, 2, 31, 0.15);
+  --primary: var(--charcoal);
+  --accent: var(--dusty-pink);
+  --bg: var(--pearl-white);
+  --white: var(--pearl-white);
+  --nav-bg: rgba(250, 249, 247, 0.98);
+  --nav-shadow: 0 2px 24px rgba(59, 59, 59, 0.08);
+  --nav-active: var(--charcoal);
+  --float-bg: var(--pearl-white);
+  --float-shadow: 0 4px 32px rgba(59, 59, 59, 0.1);
+
+  /* Typography Variables - Editorial Hierarchy */
+  --font-accent: 'Playfair Display', serif;
+  /* Decorative, callouts */
+  --font-heading: 'Cormorant Garamond', serif;
+  /* Section titles, major headings */
+  --font-body: 'Poppins', sans-serif;
+  /* Body text, UI elements */
+
+  /* Legacy variables for backward compatibility */
+  --ruby: var(--charcoal);
+  --rose-ivory: var(--dusty-pink);
+  --almond: var(--pearl-white);
 }
 
 /* Reset and Base Styles */
@@ -28,72 +48,91 @@
 }
 
 body {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-weight: 300;
   background: var(--bg);
   color: var(--primary);
   min-height: 100vh;
   line-height: 1.6;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Classes */
+/* Typography Classes - Editorial Wedding Style */
 .heading {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 400;
-  letter-spacing: 2px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 .subheading {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 100;
+  font-family: var(--font-body);
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
 }
 
 .paragraph {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-weight: 300;
+  line-height: 1.6;
 }
 
 .accent {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-accent);
   font-weight: 400;
   font-style: italic;
+  letter-spacing: 0.02em;
 }
 
 /* Main Content */
 
 
 section {
-  margin-bottom: 2.5rem;
-  padding: 2rem;
+  margin-bottom: 0;
+  padding: 80px 2rem;
+  position: relative;
+}
+
+/* Generous spacing for editorial feel */
+@media (max-width: 768px) {
+  section {
+    padding: 50px 1.5rem;
+  }
 }
 
 h2 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 p {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-body);
   font-weight: 300;
   color: var(--primary);
+  line-height: 1.6;
 }
 
-/* Footer Styles */
+/* Footer Styles - Editorial */
 .site-footer {
   color: var(--primary);
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
   text-align: center;
-  padding: 1.5rem 0 1.2rem 0;
-  margin-top: 2.5rem;
-  letter-spacing: 1px;
-  font-size: 1rem;
+  padding: 60px 2rem 40px;
+  margin-top: 0;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  border-top: 1px solid rgba(59, 59, 59, 0.1);
 }
 
 .site-footer .footer-content {

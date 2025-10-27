@@ -2,20 +2,21 @@
    COMPONENTS STYLESHEET
    =================================== */
 
-/* Navigation */
+/* Navigation - Editorial Style */
 .navbar {
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   background: var(--nav-bg);
+  backdrop-filter: blur(20px);
   box-shadow: var(--nav-shadow);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.7rem 2.5rem;
-  transition: background 0.3s, box-shadow 0.3s;
+  padding: 1.2rem 3rem;
+  transition: all 0.4s ease;
 }
 
 .navbar.scrolled {
@@ -24,13 +25,14 @@
 }
 
 .navbar .logo {
-  font-family: 'Great Vibes', cursive;
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: var(--ruby);
-  letter-spacing: 2px;
+  font-family: var(--font-accent);
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--primary);
+  letter-spacing: 0.02em;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .navbar.scrolled .logo {
@@ -58,7 +60,7 @@
   display: flex;
   gap: 0.5rem;
   border: 1px solid var(--ruby);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 0.2rem;
   background: var(--rose-ivory);
 }
@@ -72,7 +74,7 @@
   font-size: 0.85rem;
   color: var(--ruby);
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 0;
   transition: all 0.3s ease;
 }
 
@@ -86,14 +88,15 @@
 }
 
 .navbar ul li a {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 300;
-  color: var(--ruby);
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--primary);
   text-decoration: none;
-  font-size: 1.05rem;
-  padding: 0.3rem 0;
-  transition: color 0.3s;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.8rem;
+  transition: all 0.3s ease;
   position: relative;
+  letter-spacing: 0.02em;
 }
 
 .navbar.scrolled ul li a {
@@ -103,12 +106,14 @@
 .navbar ul li a::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: 0.3rem;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: var(--ruby);
-  transition: width 0.3s ease;
+  background: var(--dusty-pink);
+  transition: all 0.3s ease;
+  border-radius: 0;
 }
 
 .navbar.scrolled ul li a::after {
@@ -137,7 +142,7 @@
   width: 25px;
   height: 3px;
   background: var(--ruby);
-  border-radius: 2px;
+  border-radius: 0;
   transition: all 0.3s;
 }
 
@@ -158,7 +163,7 @@
 .wave-bar {
   width: 3px;
   background: var(--ruby);
-  border-radius: 2px;
+  border-radius: 0;
   animation: wave 1.5s ease-in-out infinite;
 }
 
@@ -235,96 +240,197 @@
   animation-duration: 1s;
 }
 
-/* Hero Section */
+/* Hero Section - Editorial Full-Width with Typography Overlay */
 .hero {
   width: 100%;
   height: 100vh;
-  background: url('../../images/image00010.jpeg') center center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   margin-bottom: 0;
+  overflow: hidden;
+}
+
+/* Hero background image as separate element */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  z-index: 0;
+}
+
+/* Soft gradient overlay for text legibility - very subtle */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom,
+      rgba(253, 245, 244, 0.1) 0%,
+      rgba(250, 249, 247, 0.18) 100%);
+  z-index: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top,
+      rgba(253, 245, 244, 0.3),
+      transparent);
+  z-index: 2;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .hero {
+    height: 50vh;
+    margin-top: 10%;
+    /* Smaller height on mobile */
+  }
+
+  .hero::after {
+    height: 35%;
+    /* Smaller overlay on mobile */
+  }
 }
 
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   text-align: center;
-  color: var(--white);
+  color: var(--primary);
+  max-width: 800px;
+  padding: 0 2rem;
 }
 
 .hero-content h1 {
-  font-family: 'MonteCarlo', cursive;
-  font-weight: 400;
-  font-size: 3.5rem;
-  letter-spacing: 2px;
-  margin-bottom: 0;
-  text-shadow: 0 2px 8px rgba(102, 2, 31, 0.18);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(3rem, 8vw, 5rem);
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(59, 59, 59, 0.12);
+  color: var(--primary);
 }
 
-/* Hero Banner */
+/* Hero Banner - Vertical Side Layout for Desktop */
 .hero-banner {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 10%;
   right: 0;
+  bottom: 0;
+  width: 200px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--rose-ivory);
-  padding: 1.5rem 0;
-  width: 100%;
-  box-shadow: 0 -4px 12px rgba(102, 2, 31, 0.15);
+  background: var(--powder);
+  padding: 3rem 1.5rem;
+  box-shadow: -8px 0 32px rgba(59, 59, 59, 0.08);
   z-index: 3;
+  border-left: 1px solid rgba(59, 59, 59, 0.08);
+  backdrop-filter: blur(10px);
 }
 
 .banner-column {
-  flex: 1;
+  width: 100%;
   text-align: center;
   position: relative;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 1.5rem 0;
+  margin-bottom: 1rem;
 }
 
 .banner-column:hover {
-  transform: translateY(-2px);
+  transform: translateX(-4px);
 }
 
 .banner-column:not(:last-child)::after {
   content: '';
   position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 60%;
-  background: rgba(102, 2, 31, 0.2);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: rgba(59, 59, 59, 0.1);
 }
 
 .banner-column h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--ruby);
-  margin: 0 0 0.3rem 0;
-  letter-spacing: 1px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--primary);
+  margin: 0 0 0.6rem 0;
+  letter-spacing: 0.02em;
 }
 
 .banner-column p {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
-  font-size: 0.85rem;
-  color: var(--ruby);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: var(--primary);
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
 }
 
-/* About Section */
+/* Mobile: Horizontal banner at bottom */
+@media (max-width: 768px) {
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    padding: 1.5rem 1rem;
+    border-left: none;
+    border-top: 1px solid rgba(59, 59, 59, 0.08);
+  }
+
+  .banner-column {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+  }
+
+  .banner-column:not(:last-child)::after {
+    right: 0;
+    top: 50%;
+    left: auto;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+  }
+
+  .banner-column:hover {
+    transform: translateY(-2px);
+  }
+
+  .hero-background {
+    object-position: center center;
+  }
+}
+
+/* About Section - Alternating Image/Text Layout */
 .about-section {
-  background: var(--almond);
-  padding: 4rem 0;
+  background: var(--powder);
+  padding: 100px 0;
 }
 
 .about-container {
@@ -403,26 +509,30 @@
   width: 100%;
   height: 400px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 0;
   display: block;
 }
 
-/* Gallery */
+/* Gallery Section - Editorial Grid Layout */
 .gallery-section {
-  background: var(--rose-ivory);
+  background: var(--powder);
   width: 100%;
-  padding: 2.5rem 0;
+  padding: 100px 0;
 }
 
 .gallery-container {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 3rem;
 }
 
 .gallery-container h2 {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: 0.02em;
 }
 
 .gallery-collage {
@@ -437,13 +547,14 @@
 .collage-item {
   position: absolute;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.15);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(59, 59, 59, 0.12);
+  transition: all 0.4s ease;
+  border-radius: 0;
 }
 
 .collage-item:hover {
-  transform: scale(1.05) rotate(2deg);
-  box-shadow: 0 8px 25px rgba(102, 2, 31, 0.25);
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 16px 48px rgba(59, 59, 59, 0.18);
   z-index: 10;
 }
 
@@ -496,107 +607,121 @@
   margin-top: 2rem;
 }
 
+/* Editorial buttons - Consistent Dusty Pink treatment */
 .gallery-button {
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 1rem;
-  color: var(--ruby);
+  color: var(--primary);
   text-decoration: none;
-  padding: 1rem 2rem;
-  border: 2px solid var(--ruby);
+  padding: 1.25rem 3rem;
+  border: 2px solid var(--dusty-pink);
   background: transparent;
   transition: all 0.3s ease;
-  letter-spacing: 1px;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  border-radius: 0;
 }
 
 .gallery-button:hover {
-  background: var(--ruby);
-  color: var(--almond);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+  background: var(--dusty-pink);
+  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(59, 59, 59, 0.12);
 }
 
-/* Lessons Section */
+/* Lessons Section - Editorial Two-Column Split */
 .lessons-section {
-  background: var(--almond);
+  background: var(--pearl-white);
   width: 100%;
-  padding: 3rem 0;
+  padding: 100px 0;
 }
 
 .lessons-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 3rem;
 }
 
 .lessons-content {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 2.5rem;
+  gap: 5rem;
   align-items: center;
 }
 
+/* Editorial typography hierarchy - heading font for titles */
 .lessons-text h2 {
-  font-family: 'MonteCarlo', cursive;
-  font-weight: 400;
-  font-size: 2.4rem;
-  color: var(--ruby);
-  margin-bottom: 1rem;
-  letter-spacing: 1px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
 .lessons-paragraph {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
-  font-size: 1rem;
-  color: var(--ruby);
-  line-height: 1.8;
-  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  color: var(--primary);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  opacity: 0.9;
 }
 
 .lessons-cta {
   margin-top: 1.5rem;
 }
 
+/* Editorial-style buttons - Dusty Pink accent */
 .lessons-button {
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 1rem;
-  color: var(--almond);
+  color: var(--primary);
   text-decoration: none;
-  padding: 1rem 1.5rem;
-  background: var(--ruby);
-  border: 2px solid var(--ruby);
-  letter-spacing: 0.5px;
+  padding: 1.25rem 2.5rem;
+  background: var(--dusty-pink);
+  border: 2px solid var(--dusty-pink);
+  letter-spacing: 0.03em;
   text-transform: none;
   transition: all 0.3s ease;
-  border-radius: 4px;
+  border-radius: 0;
+  box-shadow: 0 4px 16px rgba(59, 59, 59, 0.08);
 }
 
 .lessons-button:hover {
   background: transparent;
-  color: var(--ruby);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(59, 59, 59, 0.12);
 }
 
 .lessons-subtext {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-body);
   font-weight: 300;
   font-size: 0.95rem;
-  color: var(--ruby);
-  margin-top: 1rem;
+  color: var(--primary);
+  margin-top: 1.2rem;
+  opacity: 0.75;
+  letter-spacing: 0.02em;
 }
 
+/* Soft image layering effect */
 .lessons-image img {
   width: 100%;
-  height: 420px;
   object-fit: cover;
-  border-radius: 6px;
-  box-shadow: 0 6px 20px rgba(102, 2, 31, 0.15);
+  border-radius: 0;
+  box-shadow: 0 12px 40px rgba(59, 59, 59, 0.12);
+  transition: transform 0.4s ease;
+}
+
+.lessons-image img:hover {
+  transform: scale(1.02);
 }
 
 @media (max-width: 900px) {
@@ -624,83 +749,89 @@
 
 }
 
-/* Floating Contact Bar */
+/* Modern Contact Button - Bottom Right Floating Action Button */
+/* Always accessible, clean design matching editorial aesthetic */
 .floating-bar {
   position: fixed;
-  top: 80px;
-  left: 24px;
-  background: var(--float-bg);
-  box-shadow: 0 4px 20px rgba(102, 2, 31, 0.15);
-  border-radius: 30px;
-  padding: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
+  bottom: 32px;
+  right: 32px;
   z-index: 200;
-  transition: all 0.3s ease;
-}
-
-.floating-bar:hover {
-  box-shadow: 0 8px 30px rgba(102, 2, 31, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .contact-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
-  background: var(--ruby);
-  color: var(--almond);
-  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  background: var(--dusty-pink);
+  color: var(--primary);
+  border-radius: 0;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
-  flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.5rem;
+  box-shadow: 0 8px 24px rgba(59, 59, 59, 0.15);
+  border: 2px solid var(--pearl-white);
+  position: relative;
+  z-index: 10;
 }
 
 .contact-toggle:hover {
-  background: var(--ruby);
-  transform: scale(1.1);
+  background: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(59, 59, 59, 0.2);
+}
+
+.contact-toggle.expanded {
+  background: var(--charcoal);
+  color: var(--pearl-white);
 }
 
 .contact-toggle.expanded i {
-  transform: rotate(45deg);
+  transform: rotate(135deg);
 }
 
+/* Contact Icons - Vertical Stack */
 .contact-icons {
   display: flex;
-  gap: 0.8rem;
-  transition: all 0.3s ease;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateY(20px) scale(0.8);
   pointer-events: none;
-  width: 0;
-  overflow: hidden;
+  margin-bottom: 76px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .contact-icons.expanded {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
   pointer-events: all;
-  width: auto;
 }
 
 .floating-bar a {
-  color: var(--ruby);
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
+  color: var(--primary);
+  font-size: 1.3rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
   position: relative;
-  background: var(--float-bg);
-  box-shadow: 0 2px 8px rgba(102, 2, 31, 0.1);
-  flex-shrink: 0;
+  background: var(--pearl-white);
+  box-shadow: 0 4px 16px rgba(59, 59, 59, 0.12);
+  border: 2px solid var(--dusty-pink);
 }
 
 .floating-bar a::before {
@@ -710,7 +841,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 50%;
+  border-radius: 0;
   background: currentColor;
   opacity: 0;
   transition: all 0.3s ease;
@@ -718,8 +849,9 @@
 }
 
 .floating-bar a:hover {
-  transform: scale(1.15);
-  box-shadow: 0 4px 15px rgba(102, 2, 31, 0.2);
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 8px 24px rgba(59, 59, 59, 0.18);
+  border-color: currentColor;
 }
 
 .floating-bar a:hover i {
@@ -753,18 +885,28 @@
   color: #25D366;
 }
 
-/* Mobile responsive */
+/* Mobile responsive - keeps button accessible but smaller */
 @media (max-width: 768px) {
   .floating-bar {
-    left: 12px;
-    top: 70px;
-    padding: 0.6rem 0.4rem;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .contact-toggle {
+    width: 56px;
+    height: 56px;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 20px rgba(59, 59, 59, 0.18);
+  }
+
+  .contact-icons {
+    margin-bottom: 68px;
   }
 
   .floating-bar a {
-    font-size: 1.3rem;
-    width: 40px;
-    height: 40px;
+    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
   }
 
   .about-section {

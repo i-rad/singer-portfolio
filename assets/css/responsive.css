@@ -51,7 +51,7 @@
     flex-direction: column;
     width: 200px;
     box-shadow: var(--nav-shadow);
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 0 0;
     display: none;
     padding: 1.5rem 1rem 4rem 1rem;
   }
@@ -69,6 +69,7 @@
     color: var(--primary);
     padding: 0.5rem 1rem;
     font-size: 2rem;
+    text-wrap-mode: nowrap;
   }
 
   .navbar ul li.language-toggle-mobile {
