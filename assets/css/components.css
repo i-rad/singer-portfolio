@@ -25,9 +25,9 @@
 }
 
 .navbar .logo {
-  font-family: var(--font-accent);
-  font-weight: 500;
-  font-style: italic;
+  font-family: 'Dawning of a New Day', cursive;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.4rem;
   color: var(--primary);
   letter-spacing: 0.02em;
@@ -69,7 +69,7 @@
   background: transparent;
   border: none;
   padding: 0.4rem 0.8rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 0.85rem;
   color: var(--ruby);
@@ -88,11 +88,12 @@
 }
 
 .navbar ul li a {
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
+  text-transform: none;
   font-weight: 400;
   color: var(--primary);
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1.35rem;
   padding: 0.5rem 0.8rem;
   transition: all 0.3s ease;
   position: relative;
@@ -217,6 +218,32 @@
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* Media Icon Animation */
+.media-icon {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.media-icon i {
+  font-size: 1.2rem;
+  color: var(--ruby);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Contact Icon Animation */
+.contact-icon {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-icon i {
+  font-size: 1.2rem;
+  color: var(--ruby);
+  animation: pulse 2s ease-in-out infinite;
+}
+
 @keyframes pulse {
 
   0%,
@@ -236,7 +263,9 @@
   animation-duration: 0.8s;
 }
 
-.banner-column:hover .microphone-icon i {
+.banner-column:hover .microphone-icon i,
+.banner-column:hover .media-icon i,
+.banner-column:hover .contact-icon i {
   animation-duration: 1s;
 }
 
@@ -328,47 +357,46 @@
   color: var(--primary);
 }
 
-/* Hero Banner - Vertical Side Layout for Desktop */
+/* Hero Banner - Horizontal Layout for All Views */
 .hero-banner {
-  position: absolute;
-  top: 10%;
-  right: 0;
-  bottom: 0;
-  width: 200px;
+  position: relative;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background: var(--powder);
-  padding: 3rem 1.5rem;
-  box-shadow: -8px 0 32px rgba(59, 59, 59, 0.08);
-  z-index: 3;
-  border-left: 1px solid rgba(59, 59, 59, 0.08);
-  backdrop-filter: blur(10px);
+  padding: 2rem 1.5rem;
+  border-top: 1px solid rgba(59, 59, 59, 0.08);
+  border-bottom: 1px solid rgba(59, 59, 59, 0.08);
+  gap: 1rem;
 }
 
 .banner-column {
-  width: 100%;
+  flex: 1;
+  max-width: 400px;
   text-align: center;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 1.5rem 0;
-  margin-bottom: 1rem;
+  padding: 1.5rem 1rem;
+  text-decoration: none;
+  display: block;
+  color: inherit;
 }
 
 .banner-column:hover {
-  transform: translateX(-4px);
+  transform: translateY(-2px);
 }
 
 .banner-column:not(:last-child)::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 1px;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
   background: rgba(59, 59, 59, 0.1);
 }
 
@@ -377,8 +405,9 @@
   font-weight: 500;
   font-size: clamp(1rem, 2vw, 1.3rem);
   color: var(--primary);
-  margin: 0 0 0.6rem 0;
+  margin: 0;
   letter-spacing: 0.02em;
+  text-transform: uppercase
 }
 
 .banner-column p {
@@ -391,35 +420,23 @@
   opacity: 0.85;
 }
 
-/* Mobile: Horizontal banner at bottom */
+/* Mobile adjustments for hero banner */
 @media (max-width: 768px) {
   .hero-banner {
-    position: relative;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
     padding: 1.5rem 1rem;
-    border-left: none;
-    border-top: 1px solid rgba(59, 59, 59, 0.08);
+    gap: 0.5rem;
   }
 
   .banner-column {
-    padding: 0.5rem 1rem;
-    margin-bottom: 0;
+    padding: 1rem 0.5rem;
   }
 
-  .banner-column:not(:last-child)::after {
-    right: 0;
-    top: 50%;
-    left: auto;
-    bottom: auto;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 60%;
+  .banner-column h3 {
+    font-size: 0.9rem;
   }
 
-  .banner-column:hover {
-    transform: translateY(-2px);
+  .banner-column p {
+    font-size: 0.75rem;
   }
 
   .hero-background {
@@ -507,7 +524,6 @@
 
 .about-image img {
   width: 100%;
-  height: 400px;
   object-fit: cover;
   border-radius: 0;
   display: block;
@@ -609,6 +625,7 @@
 
 /* Editorial buttons - Consistent Dusty Pink treatment */
 .gallery-button {
+  text-align: center;
   display: inline-block;
   font-family: var(--font-body);
   font-weight: 500;
@@ -620,7 +637,7 @@
   background: transparent;
   transition: all 0.3s ease;
   letter-spacing: 0.03em;
-  text-transform: uppercase;
+  text-transform: none;
   border-radius: 0;
 }
 
@@ -885,6 +902,196 @@
   color: #25D366;
 }
 
+/* About Section - Editorial Wedding Style */
+.about-section {
+  background: var(--pearl-white);
+  padding: 100px 0;
+}
+
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.invitation-wrap {
+  background: var(--powder);
+  border: 2px solid var(--dusty-pink);
+  padding: 4rem;
+  box-shadow: 0 8px 32px rgba(59, 59, 59, 0.08);
+  border-radius: 0;
+}
+
+.invitation-header {
+  text-align: center;
+  padding: 0 1.5rem 1rem;
+}
+
+.invitation-monogram {
+  font-family: var(--font-accent);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: var(--primary);
+}
+
+.invitation-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--primary);
+  margin: 1rem 0 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.invitation-subtitle {
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.invitation-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--dusty-pink), transparent);
+  width: 200px;
+  margin: 1.5rem auto 0;
+  border-radius: 0;
+}
+
+.invitation-card {
+  margin: 1rem 0 0;
+  padding: 3rem;
+  border-radius: 0;
+}
+
+.invitation-quote {
+  border: 2px solid var(--dusty-pink);
+  padding: 2.5rem 2rem;
+  margin: 2.5rem 0;
+  text-align: center;
+  position: relative;
+  background: var(--pearl-white);
+  border-radius: 0;
+  box-shadow: 0 4px 20px rgba(59, 59, 59, 0.06);
+}
+
+.invitation-quote::after {
+  content: '❦';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--powder);
+  color: var(--primary);
+  font-size: 1.6rem;
+  padding: 0 1rem;
+}
+
+.invitation-quote-line {
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: var(--primary);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+  position: relative;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.invitation-quote-line:last-child {
+  margin-bottom: 0;
+}
+
+.invitation-cta {
+  text-align: center;
+  padding: 1.5rem 1rem 0 1rem;
+}
+
+.invitation-button {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 1.25rem 3rem;
+  background: var(--dusty-pink);
+  border: 2px solid var(--dusty-pink);
+  letter-spacing: 0.03em;
+  text-transform: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  box-shadow: 0 4px 16px rgba(59, 59, 59, 0.08);
+}
+
+.invitation-button:hover {
+  background: transparent;
+  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(59, 59, 59, 0.12);
+}
+
+.invitation-note {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: var(--primary);
+  margin-top: 1rem;
+  opacity: 0.75;
+  letter-spacing: 0.01em;
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-text {
+  position: relative;
+}
+
+.about-text p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: var(--primary);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  text-align: justify;
+  letter-spacing: 0.01em;
+}
+
+.about-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 500px;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: 0 16px 48px rgba(59, 59, 59, 0.12);
+  transition: all 0.4s ease;
+}
+
+.about-image img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 24px 64px rgba(59, 59, 59, 0.18);
+}
+
 /* Mobile responsive - keeps button accessible but smaller */
 @media (max-width: 768px) {
   .floating-bar {
@@ -910,20 +1117,96 @@
   }
 
   .about-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
-  .about-content::before,
-  .about-content::after {
-    display: none;
+  .about-container {
+    padding: 0 1.5rem;
   }
 
-  .about-text::before {
-    display: none;
+  .invitation-wrap {
+    padding: 2rem;
   }
 
-  .about-image::before,
-  .about-image::after {
-    display: none;
+  .invitation-card {
+    padding: 1.25rem;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+
+  .about-image {
+    margin: 2rem 0;
+  }
+
+  .about-image img {
+    max-width: 100%;
+  }
+
+  .invitation-button {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .invitation-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.5rem 1rem 0 1rem;
+  }
+
+  .invitation-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-main {
+    padding: 2rem 0;
+  }
+
+  .about-container {
+    padding: 0 1rem;
+  }
+
+  .invitation-title {
+    font-size: 2.1rem;
+  }
+
+  .invitation-subtitle {
+    letter-spacing: 2px;
+  }
+
+  .invitation-card {
+    padding: 1rem;
+  }
+
+  .about-content {
+    gap: 2rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .invitation-button {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.85rem;
   }
 }

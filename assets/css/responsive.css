@@ -116,10 +116,6 @@
   .about-text h2 {
     font-size: 2rem;
   }
-
-  .about-image img {
-    height: 300px;
-  }
 }
 
 /* Mobile responsive */
@@ -127,10 +123,6 @@
 
   /* Add more spacing to main content on mobile */
   main {
-    padding-left: 3rem;
-  }
-
-  .about-container {
     padding-left: 3rem;
   }
 

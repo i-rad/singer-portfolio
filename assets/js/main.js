@@ -71,12 +71,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initSmoothScroll();
 
-  // Banner column click handlers (for future functionality)
+  // Banner column click handlers - only for elements that aren't already links
   const bannerColumns = document.querySelectorAll('.banner-column');
 
   bannerColumns.forEach(column => {
+    // Skip if the banner-column is already an anchor tag with href
+    if (column.tagName === 'A' && column.getAttribute('href')) {
+      return; // Let the link work naturally
+    }
+    
     column.addEventListener('click', function () {
-      const action = this.querySelector('h3').textContent.toLowerCase();
+      const action = this.querySelector('h3')?.textContent.toLowerCase();
 
       // Add your custom functionality here
       console.log(`Clicked: ${action}`);

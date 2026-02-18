@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Editorial Wedding Typography -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&family=Dawning+of+a+New+Day&family=IM+Fell+DW+Pica+SC&display=swap"
     rel="stylesheet">
 
   <!-- Icons -->
@@ -34,26 +34,63 @@
   <!-- Hero Section -->
   <section class="hero" id="home">
     <img src="./images/image00010.jpeg" alt="Petra Golubović Jež" class="hero-background">
-
   </section>
-  <section class="hero-banner">
-    <div class="banner-column">
-      <div class="sound-wave">
-        <div class="wave-bar"></div>
-        <div class="wave-bar"></div>
-        <div class="wave-bar"></div>
-        <div class="wave-bar"></div>
-        <div class="wave-bar"></div>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="about-container">
+      <div class="invitation-wrap">
+        <div class="invitation-header">
+          <h2 class="invitation-title" data-i18n="about.invitation.title">A Voice For Your Wedding</h2>
+          <div class="invitation-subtitle" data-i18n="about.invitation.subtitle">Timeless • Elegant • Personal</div>
+          <div class="invitation-divider"></div>
+        </div>
+        <div class="invitation-card">
+          <div class="about-content">
+            <div class="about-text">
+              <p data-i18n="about.invitation.introParagraph">Close your eyes for a moment and imagine…
+
+                A day in your life you'll remember forever.
+                You stand facing each other — your hearts racing, and perhaps a tear of joy gently rolls down your
+                cheek.
+                Love, captured in time, surrounded by the joy and prayers of your loved ones.</p>
+
+              <div class="invitation-quote">
+                <p class="invitation-quote-line" data-i18n="about.invitation.quote.line1">Your only word is "Yes",</p>
+                <p class="invitation-quote-line" data-i18n="about.invitation.quote.line2">while everything else will be
+                  expressed through my voice and music.</p>
+              </div>
+              <div class="about-image">
+                <img src="./images/1.jpg" alt="Petra Jež - Singer">
+              </div>
+            </div>
+            <div class="about-text">
+              <p data-i18n="about.invitation.aboutPetra.paragraph1">I'm Petra Golubovic Jez, a passionate singer with a
+                deep love for creating heartfelt and timeless performances. I find joy in connecting with people through
+                music and crafting moments that stay in the heart forever.</p>
+              <p data-i18n="about.invitation.aboutPetra.paragraph2">With years of experience in live performance and
+                training in modern vocal technique,
+                I bring a unique blend of vocal mastery and emotional depth to every song I perform.</p>
+              <p data-i18n="about.invitation.aboutPetra.paragraph3">Music has been my lifelong companion — from my early
+                piano days to discovering that singing is my true calling. After completing my Bachelor's degree at the
+                Academy of Music in Bosnia, I've sung with numerous ensembles and performed across half the world — from
+                New York to the Sydney Opera House.
+                These life experiences taught me to connect deeply with my emotions, something that shines through in
+                every interpretation.</p>
+              <p data-i18n="about.invitation.aboutPetra.paragraph4">But the most important experience of my life is
+                that, besides music, I have found true love and continue to live it every day.
+                I carry it in my voice and use it to shape every note of your celebration, creating a moment to be
+                cherished forever.</p>
+            </div>
+          </div>
+          <div class="invitation-cta">
+            <a href="mailto:petrinvokalniatelje@gmail.com" class="invitation-button"
+              data-i18n="about.invitation.cta.button">RSVP · Book a performance</a>
+            <div class="invitation-note" data-i18n="about.invitation.cta.note">Let's craft a ceremony that sounds like
+              your love story.</div>
+          </div>
+        </div>
       </div>
-      <h3 data-i18n="home.watch">WATCH</h3>
-      <p data-i18n="home.musicVideos">Music Videos</p>
-    </div>
-    <div class="banner-column">
-      <div class="microphone-icon">
-        <i class="fas fa-microphone"></i>
-      </div>
-      <h3 data-i18n="home.book">BOOK</h3>
-      <p data-i18n="home.forEvent">For An Event</p>
     </div>
   </section>
 
@@ -72,7 +109,7 @@
             When I'm not performing, I teach — and I'd love to help you take your first step into the world of music.
           </p>
           <div class="lessons-cta">
-            <a href="mailto:your.email@example.com?subject=Book%20a%20lesson" class="gallery-button"
+            <a href="mailto:petrinvokalniatelje@gmail.com" class="gallery-button"
               data-i18n="home.lessons.button">Click here to book a lesson</a>
             <div class="lessons-subtext" data-i18n="home.lessons.subtext">Find out how we can work together to develop
               your voice, confidence, and musical expression.</div>
@@ -85,6 +122,21 @@
     </div>
   </section>
 
+  <!-- Hero Banner - Horizontal layout for all views, positioned between lessons and gallery -->
+  <section class="hero-banner">
+    <a href="blog.html" class="banner-column">
+      <div class="media-icon">
+        <i class="fas fa-music"></i>
+      </div>
+      <h3 data-i18n="home.viewMedia">Medien ansehen</h3>
+    </a>
+    <a href="mailto:petrinvokalniatelje@gmail.com" class="banner-column">
+      <div class="contact-icon">
+        <i class="fas fa-envelope"></i>
+      </div>
+      <h3 data-i18n="home.inquire">Jetzt anfragen</h3>
+    </a>
+  </section>
 
   <!-- Gallery Section -->
   <section id="gallery" class="gallery-section">

@@ -12,6 +12,8 @@
         "musicVideos": "Musikvideos",
         "book": "BUCHEN",
         "forEvent": "Für Eine Veranstaltung",
+        "viewMedia": "Medien ansehen",
+        "inquire": "Jetzt anfragen",
         "lessons": {
             "title": "Bereit, Ihre musikalische Reise zu beginnen?",
             "paragraph1": "Sie haben noch nie Klavier gespielt und möchten eine Stunde bei mir buchen?\nOder möchten Sie vielleicht jemandem eine Stunde schenken – denn Musik ist wirklich ein schönes Geschenk!\nOder möchten Sie stattdessen lieber Singen erkunden? Warum nicht!",
@@ -21,7 +23,7 @@
         },
         "gallery": {
             "title": "Galerie",
-            "button": "Vollständige Galerie ansehen"
+            "button": "Galerie ansehen"
         }
     },
     "gallery": {

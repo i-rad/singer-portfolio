@@ -12,6 +12,8 @@
         "musicVideos": "Music Videos",
         "book": "BOOK",
         "forEvent": "For An Event",
+        "viewMedia": "View Media",
+        "inquire": "Inquire Now",
         "lessons": {
             "title": "Ready to start your musical journey?",
             "paragraph1": "You've never played piano before and want to book a lesson with me?\nOr maybe you'd love to gift someone a lesson — because music truly is a beautiful gift!\nOr perhaps you'd rather explore singing instead? Why not!",
@@ -21,7 +23,7 @@
         },
         "gallery": {
             "title": "Gallery",
-            "button": "View Full Gallery"
+            "button": "View Gallery"
         }
     },
     "gallery": {

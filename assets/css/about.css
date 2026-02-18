@@ -7,7 +7,6 @@
     background: var(--pearl-white);
     min-height: 100vh;
     padding-top: 0px;
-    margin-top: 10%;
     /* Account for fixed navbar */
 }
 
@@ -90,7 +89,7 @@
 
 .invitation-header {
     text-align: center;
-    padding: 2rem 1.5rem 1rem;
+    padding: 0 1.5rem 1rem;
 }
 
 /* Accent font for decorative monogram */
@@ -272,7 +271,6 @@
 .about-image img {
     width: 100%;
     max-width: 500px;
-    height: 500px;
     object-fit: cover;
     border-radius: 0;
     box-shadow: 0 16px 48px rgba(59, 59, 59, 0.12);
@@ -330,7 +328,6 @@
     }
 
     .about-image img {
-        height: 350px;
         max-width: 100%;
     }
 
@@ -425,10 +422,6 @@
 
     .about-text p {
         font-size: 0.9rem;
-    }
-
-    .about-image img {
-        height: 250px;
     }
 
     .invitation-button {
