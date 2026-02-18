@@ -8,6 +8,10 @@
     padding: 0.7rem 1rem;
   }
 
+  .navbar .logo {
+    font-size: 1.85rem;
+  }
+
   /* Overlay for mobile menu */
   .mobile-menu-overlay {
     display: none;
