@@ -120,7 +120,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const desc = escapeHtml(item.description || '');
     if (item.type === 'video') {
       div.innerHTML = `
-        <video class="gallery-item-video" src="${escapeHtml(item.src)}" muted playsinline preload="metadata"></video>
+        <div class="gallery-item-media">
+          <video class="gallery-item-video" src="${escapeHtml(item.src)}" muted playsinline preload="metadata"></video>
+          <span class="gallery-video-play" aria-hidden="true"><i class="fas fa-play"></i></span>
+        </div>
         <div class="gallery-item-description">${desc}</div>
       `;
     } else {
