@@ -121,6 +121,20 @@
   transform: scale(1.04);
 }
 
+.gallery-item-video {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+  background: #1a1a1a;
+}
+
+.gallery-item--video:hover .gallery-item-video {
+  transform: scale(1.04);
+}
+
 .gallery-item-overlay {
   display: none !important;
 }

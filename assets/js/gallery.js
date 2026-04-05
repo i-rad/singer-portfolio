@@ -2,62 +2,81 @@
    GALLERY PAGE JAVASCRIPT
    =================================== */
 
-document.addEventListener('DOMContentLoaded', function () {
+const GALLERY_I18N_FALLBACK = {
+  'gallery.loading': 'Loading gallery…',
+  'gallery.noImages': 'No images or videos yet',
+  'gallery.subtitle': 'A collection of moments and memories'
+};
+
+document.addEventListener('DOMContentLoaded', async function () {
   const galleryGrid = document.getElementById('gallery-grid');
 
-  // Function to get translated text
   function t(key) {
     if (window.i18n) {
-      return window.i18n.get(key);
+      const val = window.i18n.get(key);
+      if (val != null && val !== key) return val;
     }
-    return key;
+    return GALLERY_I18N_FALLBACK[key] || key;
   }
 
-  // Show loading state
+  function escapeHtml(text) {
+    if (text == null) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  if (window.i18n && typeof window.i18n.loadTranslations === 'function') {
+    try {
+      await window.i18n.loadTranslations();
+    } catch (e) {
+      console.warn('Gallery: could not load translations', e);
+    }
+  }
+
   galleryGrid.innerHTML = `<div class="gallery-loading">${t('gallery.loading')}</div>`;
 
-  // Function to fetch images from the backend API
-  async function fetchGalleryImages() {
-    try {
-      console.log('Fetching gallery images from API...');
+  async function fetchGalleryItems() {
+    const [galleryRes, videosRes] = await Promise.all([
+      fetch('/api/gallery', { method: 'GET', headers: { 'Content-Type': 'application/json' }, mode: 'cors' }),
+      fetch('/api/videos', { method: 'GET', headers: { 'Content-Type': 'application/json' }, mode: 'cors' })
+    ]);
 
-      const response = await fetch('/api/gallery', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors'
-      });
-
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('API response:', data);
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to load gallery');
-      }
-
-      return data.images;
-
-    } catch (error) {
-      console.error('Error fetching gallery images:', error);
-      throw error;
+    if (!galleryRes.ok) {
+      throw new Error(`Gallery HTTP ${galleryRes.status}`);
     }
+
+    const galleryData = await galleryRes.json();
+    if (!galleryData.success) {
+      throw new Error(galleryData.error || 'Failed to load gallery');
+    }
+
+    const images = (galleryData.images || []).map((row) => ({
+      type: 'image',
+      src: row.src,
+      description: row.description || ''
+    }));
+
+    let videos = [];
+    if (videosRes.ok) {
+      const videosData = await videosRes.json();
+      if (videosData.success && videosData.videos) {
+        videos = videosData.videos.map((row) => ({
+          type: 'video',
+          src: row.src,
+          description: row.description || ''
+        }));
+      }
+    }
+
+    return [...images, ...videos];
   }
 
-  // Function to load and render the gallery
   async function loadGallery() {
     try {
-      const images = await fetchGalleryImages();
+      const items = await fetchGalleryItems();
 
-      if (images.length === 0) {
-        // Show message if no images found
+      if (items.length === 0) {
         galleryGrid.innerHTML = `
           <div class="gallery-empty">
             <h2>${t('gallery.noImages')}</h2>
@@ -67,75 +86,75 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      // Render the gallery
-      renderGallery(images);
-
+      renderGallery(items);
     } catch (error) {
-      // Show error message
+      console.error('Error loading gallery:', error);
       galleryGrid.innerHTML = `
         <div class="gallery-loading">
-          <p>Error loading gallery images.</p>
+          <p>Error loading gallery.</p>
           <p>Please check that the server is running and try refreshing the page.</p>
-          <p>Error: ${error.message}</p>
+          <p>Error: ${escapeHtml(error.message)}</p>
         </div>
       `;
     }
   }
 
-  // Function to render the gallery
-  function renderGallery(images) {
-    // Clear loading state
+  function renderGallery(items) {
     galleryGrid.innerHTML = '';
 
-    // Add images to grid
-    images.forEach((imageData, idx) => {
-      const item = createGalleryItem(imageData, idx, images);
-      galleryGrid.appendChild(item);
+    items.forEach((item, idx) => {
+      const el = createGalleryItem(item, idx, items);
+      galleryGrid.appendChild(el);
     });
 
-    // Update page title with image count
     const title = document.querySelector('title');
     if (title) {
-      title.textContent = `Gallery (${images.length} images) | Petras Music Atelier`;
+      title.textContent = `Gallery (${items.length}) | Petras Music Atelier`;
     }
   }
 
-  // Function to create gallery item
-  function createGalleryItem(imageData, idx, images) {
-    const item = document.createElement('div');
-    item.className = 'gallery-item';
+  function createGalleryItem(item, idx, items) {
+    const div = document.createElement('div');
+    div.className = 'gallery-item' + (item.type === 'video' ? ' gallery-item--video' : '');
 
-    item.innerHTML = `
-      <img src="${imageData.src}" alt="${imageData.description}" loading="lazy">
-      <div class="gallery-item-description">${imageData.description}</div>
-    `;
+    const desc = escapeHtml(item.description || '');
+    if (item.type === 'video') {
+      div.innerHTML = `
+        <video class="gallery-item-video" src="${escapeHtml(item.src)}" muted playsinline preload="metadata"></video>
+        <div class="gallery-item-description">${desc}</div>
+      `;
+    } else {
+      div.innerHTML = `
+        <img src="${escapeHtml(item.src)}" alt="${desc}" loading="lazy">
+        <div class="gallery-item-description">${desc}</div>
+      `;
+    }
 
-    // Add click event to open image in lightbox
-    item.addEventListener('click', function () {
-      openLightbox(idx, images);
+    div.addEventListener('click', function () {
+      openLightbox(idx, items);
     });
 
-    return item;
+    return div;
   }
 
-  // Function to open lightbox
-  function openLightbox(startIdx, images) {
+  function openLightbox(startIdx, items) {
     let currentIdx = startIdx;
 
-    // Create lightbox overlay
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
       <div class="lightbox-content">
         <span class="lightbox-close">&times;</span>
-        <button class="lightbox-prev" aria-label="Previous image">&#10094;</button>
-        <img src="" alt="" id="lightbox-img">
-        <button class="lightbox-next" aria-label="Next image">&#10095;</button>
+        <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
+        <div class="lightbox-media" id="lightbox-media">
+          <img src="" alt="" id="lightbox-img">
+          <video controls playsinline id="lightbox-video" style="display:none"></video>
+        </div>
+        <button class="lightbox-next" aria-label="Next">&#10095;</button>
         <div id="lightbox-description" style="margin-top: 1rem;"></div>
       </div>
     `;
 
-    // Add lightbox styles
     lightbox.style.cssText = `
       position: fixed;
       top: 0;
@@ -162,11 +181,29 @@ document.addEventListener('DOMContentLoaded', function () {
       align-items: center;
     `;
 
+    const mediaWrap = lightbox.querySelector('#lightbox-media');
+    mediaWrap.style.cssText = `
+      position: relative;
+      max-width: 100%;
+      max-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
     const img = lightbox.querySelector('#lightbox-img');
     img.style.cssText = `
       max-width: 100%;
       max-height: 80vh;
       object-fit: contain;
+      border-radius: 8px;
+      margin: 0 2.5rem;
+    `;
+
+    const video = lightbox.querySelector('#lightbox-video');
+    video.style.cssText = `
+      max-width: 100%;
+      max-height: 80vh;
       border-radius: 8px;
       margin: 0 2.5rem;
     `;
@@ -229,32 +266,42 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
 
     function updateLightbox(idx) {
-      img.src = images[idx].src;
-      img.alt = images[idx].description;
-      descEl.textContent = images[idx].description;
+      const item = items[idx];
+      descEl.textContent = item.description || '';
+
+      if (item.type === 'video') {
+        img.style.display = 'none';
+        video.style.display = 'block';
+        video.src = item.src;
+        video.load();
+      } else {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+        video.style.display = 'none';
+        img.style.display = 'block';
+        img.src = item.src;
+        img.alt = item.description || '';
+      }
     }
 
-    // Add to page
     document.body.appendChild(lightbox);
 
-    // Fade in
     setTimeout(() => {
       lightbox.style.opacity = '1';
     }, 10);
 
-    // Navigation
     function showPrev() {
-      currentIdx = (currentIdx - 1 + images.length) % images.length;
+      currentIdx = (currentIdx - 1 + items.length) % items.length;
       updateLightbox(currentIdx);
     }
     function showNext() {
-      currentIdx = (currentIdx + 1) % images.length;
+      currentIdx = (currentIdx + 1) % items.length;
       updateLightbox(currentIdx);
     }
     prevBtn.addEventListener('click', showPrev);
     nextBtn.addEventListener('click', showNext);
 
-    // Keyboard navigation
     function keyHandler(e) {
       if (e.key === 'ArrowLeft') showPrev();
       if (e.key === 'ArrowRight') showNext();
@@ -262,11 +309,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     document.addEventListener('keydown', keyHandler);
 
-    // Close functionality
     function closeLightbox() {
+      video.pause();
+      video.removeAttribute('src');
       lightbox.style.opacity = '0';
       setTimeout(() => {
-        document.body.removeChild(lightbox);
+        if (lightbox.parentNode) {
+          document.body.removeChild(lightbox);
+        }
         document.removeEventListener('keydown', keyHandler);
       }, 300);
     }
@@ -277,15 +327,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Initial image
     updateLightbox(currentIdx);
   }
 
-  // Start loading gallery
   loadGallery();
 
-  // Function to refresh gallery (for future use)
   window.refreshGallery = function () {
     loadGallery();
   };
-}); 
+});

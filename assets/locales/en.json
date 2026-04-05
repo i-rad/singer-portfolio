@@ -30,7 +30,7 @@
         "title": "Gallery",
         "subtitle": "A collection of moments and memories",
         "backButton": "Back to Home",
-        "noImages": "No images found",
+        "noImages": "No images or videos yet",
         "loading": "Loading gallery..."
     },
     "about": {
