@@ -4,6 +4,7 @@ const adminPassword = document.getElementById('adminPassword');
 const loginError = document.getElementById('loginError');
 const adminPanel = document.getElementById('adminPanel');
 const galleryAdmin = document.getElementById('galleryAdmin');
+const videosAdmin = document.getElementById('videosAdmin');
 const blogAdmin = document.getElementById('blogAdmin');
 const logoutBtn = document.getElementById('logoutBtn');
 
@@ -12,6 +13,7 @@ function showPanel() {
     adminPanel.style.display = '';
     adminPanel.classList.add('active');
     loadGalleryAdmin();
+    loadVideosAdmin();
     loadBlogAdmin();
 }
 function showLogin() {
@@ -61,6 +63,7 @@ document.querySelectorAll('.tab-button').forEach(button => {
         this.classList.add('active');
         const tabName = this.getAttribute('data-tab');
         document.getElementById(tabName + 'Tab').classList.add('active');
+        if (tabName === 'videos') loadVideosAdmin();
     });
 });
 
@@ -114,6 +117,62 @@ async function loadGalleryAdmin() {
     });
 }
 
+async function loadVideosAdmin() {
+    if (!videosAdmin) return;
+    videosAdmin.innerHTML = '<em>Loading videos...</em>';
+    const res = await fetch('/api/videos');
+    const data = await res.json();
+    if (!data.success) {
+        videosAdmin.innerHTML = '<span style="color:#b00">Failed to load videos</span>';
+        return;
+    }
+    if (!data.videos || data.videos.length === 0) {
+        videosAdmin.innerHTML = '<p style="color: var(--ruby); font-family: Montserrat, sans-serif;">No videos yet. Upload one above.</p>';
+        return;
+    }
+    videosAdmin.innerHTML = `
+    <table class="admin-gallery-table admin-videos-table">
+      <thead><tr><th>Preview</th><th>Description</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${data.videos.map(v => `
+          <tr data-id="${v.id}">
+            <td class="admin-video-cell">
+              <video src="${escapeHtml(v.src)}" controls muted playsinline preload="metadata" class="admin-video-preview"></video>
+            </td>
+            <td><input type="text" value="${escapeHtml(v.description || '')}" class="video-desc-input" /></td>
+            <td>
+              <button type="button" class="save-video-btn">Save</button>
+              <button type="button" class="delete-video-btn">Delete</button>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+    document.querySelectorAll('.save-video-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            const tr = this.closest('tr');
+            const id = tr.getAttribute('data-id');
+            const desc = tr.querySelector('.video-desc-input').value;
+            await fetch(`/api/admin/videos/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ description: desc })
+            });
+            loadVideosAdmin();
+        });
+    });
+    document.querySelectorAll('.delete-video-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            if (!confirm('Delete this video?')) return;
+            const tr = this.closest('tr');
+            const id = tr.getAttribute('data-id');
+            await fetch(`/api/admin/videos/${id}`, { method: 'DELETE' });
+            loadVideosAdmin();
+        });
+    });
+}
+
 async function loadBlogAdmin() {
     const res = await fetch('/api/blog');
     const data = await res.json();
@@ -161,6 +220,34 @@ if (uploadForm) {
         });
         uploadForm.reset();
         loadGalleryAdmin();
+    });
+}
+
+const videoUploadForm = document.getElementById('videoUploadForm');
+if (videoUploadForm) {
+    videoUploadForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const file = document.getElementById('uploadVideo').files[0];
+        const desc = document.getElementById('videoDesc').value;
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('video', file);
+        formData.append('description', desc);
+        try {
+            const res = await fetch('/api/admin/videos', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                videoUploadForm.reset();
+                loadVideosAdmin();
+            } else {
+                alert(data.error || 'Upload failed');
+            }
+        } catch (err) {
+            alert('Error: ' + err.message);
+        }
     });
 }
 

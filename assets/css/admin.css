@@ -97,6 +97,21 @@
     box-shadow: 0 1px 6px #0001;
 }
 
+.admin-videos-table .admin-video-cell {
+    vertical-align: middle;
+    max-width: 200px;
+}
+
+.admin-video-preview {
+    display: block;
+    max-width: 180px;
+    max-height: 100px;
+    width: 100%;
+    height: auto;
+    background: #111;
+    border-radius: 0;
+}
+
 .admin-gallery-table input[type="text"] {
     width: 100%;
     padding: 0.4rem;

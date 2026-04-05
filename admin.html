@@ -23,6 +23,7 @@
         <!-- Tabs -->
         <div class="admin-tabs">
             <button class="tab-button active" data-tab="gallery">Gallery</button>
+            <button class="tab-button" data-tab="videos">Videos</button>
             <button class="tab-button" data-tab="blog">Blog</button>
         </div>
 
@@ -34,6 +35,22 @@
                 <button type="submit">Add Image</button>
             </form>
             <div id="galleryAdmin"></div>
+        </div>
+
+        <!-- Videos Tab -->
+        <div id="videosTab" class="tab-content">
+            <form class="admin-upload-form" id="videoUploadForm">
+                <div>
+                    <label for="uploadVideo">Video file (mp4, webm, mov, m4v — max 150MB)</label>
+                    <input type="file" id="uploadVideo" accept="video/mp4,video/webm,video/quicktime,video/x-m4v,.mp4,.webm,.mov,.m4v" required />
+                </div>
+                <div>
+                    <label for="videoDesc">Description (optional)</label>
+                    <input type="text" id="videoDesc" placeholder="Description (optional)" />
+                </div>
+                <button type="submit">Add video</button>
+            </form>
+            <div id="videosAdmin"></div>
         </div>
 
         <!-- Blog Tab -->

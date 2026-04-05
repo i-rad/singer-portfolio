@@ -53,7 +53,8 @@ const multer = require('multer');
 
 // Configure upload limits
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
-const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB
+const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB (blog post attachments)
+const MAX_STANDALONE_VIDEO_SIZE = 150 * 1024 * 1024; // 150MB (videos library)
 
 const galleryStorage = multer.diskStorage({
     destination: path.join(__dirname, 'gallery'),
@@ -79,6 +80,20 @@ const upload = multer({
 const blogUpload = multer({
     storage: blogStorage,
     limits: { fileSize: MAX_VIDEO_SIZE }
+});
+
+const videosDir = path.join(__dirname, 'videos');
+const videoLibraryStorage = multer.diskStorage({
+    destination: videosDir,
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const videoLibraryUpload = multer({
+    storage: videoLibraryStorage,
+    limits: { fileSize: MAX_STANDALONE_VIDEO_SIZE }
 });
 
 app.post('/api/admin/images', requireAdmin, upload.single('image'), (req, res) => {
@@ -108,8 +123,42 @@ app.put('/api/admin/images/:id', requireAdmin, (req, res) => {
 app.delete('/api/admin/images/:id', requireAdmin, (req, res) => {
     db.get('SELECT path FROM images WHERE id = ?', [req.params.id], (err, row) => {
         if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
-        const filePath = path.join(__dirname, row.path);
+        const filePath = path.join(__dirname, row.path.replace(/^\//, ''));
         db.run('DELETE FROM images WHERE id = ?', [req.params.id], function (err2) {
+            if (err2) return res.status(500).json({ success: false, error: 'DB error' });
+            fs.unlink(filePath, () => { });
+            res.json({ success: true });
+        });
+    });
+});
+
+app.post('/api/admin/videos', requireAdmin, videoLibraryUpload.single('video'), (req, res) => {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+    const ext = path.extname(req.file.originalname).toLowerCase();
+    const allowed = ['.mp4', '.webm', '.ogg', '.mov', '.m4v'];
+    if (!allowed.includes(ext)) {
+        fs.unlinkSync(req.file.path);
+        return res.status(400).json({ success: false, error: 'Invalid file type (use mp4, webm, ogg, mov, or m4v)' });
+    }
+    const relPath = `/videos/${path.basename(req.file.path)}`;
+    db.run('INSERT INTO videos (path, description) VALUES (?, ?)', [relPath, req.body.description || ''], function (err) {
+        if (err) return res.status(500).json({ success: false, error: 'DB error' });
+        res.json({ success: true, id: this.lastID, src: relPath, description: req.body.description || '' });
+    });
+});
+
+app.put('/api/admin/videos/:id', requireAdmin, (req, res) => {
+    db.run('UPDATE videos SET description = ? WHERE id = ?', [req.body.description, req.params.id], function (err) {
+        if (err) return res.status(500).json({ success: false, error: 'DB error' });
+        res.json({ success: true });
+    });
+});
+
+app.delete('/api/admin/videos/:id', requireAdmin, (req, res) => {
+    db.get('SELECT path FROM videos WHERE id = ?', [req.params.id], (err, row) => {
+        if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
+        const filePath = path.join(__dirname, row.path.replace(/^\//, ''));
+        db.run('DELETE FROM videos WHERE id = ?', [req.params.id], function (err2) {
             if (err2) return res.status(500).json({ success: false, error: 'DB error' });
             fs.unlink(filePath, () => { });
             res.json({ success: true });
@@ -128,9 +177,18 @@ function initDbAndPopulate() {
     if (!fs.existsSync(blogDir)) {
         fs.mkdirSync(blogDir, { recursive: true });
     }
+    if (!fs.existsSync(videosDir)) {
+        fs.mkdirSync(videosDir, { recursive: true });
+    }
 
     db.serialize(() => {
         db.run(`CREATE TABLE IF NOT EXISTS images (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      path TEXT NOT NULL,
+      description TEXT
+    )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS videos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       path TEXT NOT NULL,
       description TEXT
@@ -175,6 +233,24 @@ app.get('/api/gallery', (req, res) => {
         }
         res.json({
             images: rows.map(row => ({
+                id: row.id,
+                src: row.path,
+                description: row.description || ''
+            })),
+            count: rows.length,
+            success: true
+        });
+    });
+});
+
+app.get('/api/videos', (req, res) => {
+    db.all('SELECT id, path, description FROM videos ORDER BY id ASC', (err, rows) => {
+        if (err) {
+            console.error('DB error:', err);
+            return res.status(500).json({ error: 'Failed to load videos', success: false });
+        }
+        res.json({
+            videos: rows.map(row => ({
                 id: row.id,
                 src: row.path,
                 description: row.description || ''
