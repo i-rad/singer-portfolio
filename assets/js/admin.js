@@ -137,7 +137,8 @@ async function loadVideosAdmin() {
         ${data.videos.map(v => `
           <tr data-id="${v.id}">
             <td class="admin-video-cell">
-              <video src="${escapeHtml(v.src)}" controls muted playsinline preload="metadata" class="admin-video-preview"></video>
+              <video src="${escapeHtml(v.src)}" muted playsinline preload="metadata" class="admin-video-preview" title="Preview (first frame)"></video>
+              <a href="${escapeHtml(v.src)}" target="_blank" rel="noopener noreferrer" class="admin-video-open-link">Open video</a>
             </td>
             <td><input type="text" value="${escapeHtml(v.description || '')}" class="video-desc-input" /></td>
             <td>
