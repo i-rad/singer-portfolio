@@ -3,6 +3,7 @@
         "home": "Home",
         "about": "About",
         "gallery": "Gallery",
+        "media": "View media",
         "blog": "Blog"
     },
     "home": {
@@ -12,7 +13,7 @@
         "musicVideos": "Music Videos",
         "book": "BOOK",
         "forEvent": "For An Event",
-        "viewMedia": "View Media",
+        "viewMedia": "View media",
         "inquire": "Inquire Now",
         "lessons": {
             "title": "Ready to start your musical journey?",
@@ -30,8 +31,15 @@
         "title": "Gallery",
         "subtitle": "A collection of moments and memories",
         "backButton": "Back to Home",
-        "noImages": "No images or videos yet",
+        "noImages": "No images yet",
         "loading": "Loading gallery..."
+    },
+    "media": {
+        "title": "Media",
+        "subtitle": "Videos and audio recordings",
+        "backButton": "Back to Home",
+        "noItems": "No videos or audio yet",
+        "loading": "Loading media..."
     },
     "about": {
         "title": "About",

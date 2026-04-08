@@ -24,6 +24,7 @@
         <div class="admin-tabs">
             <button class="tab-button active" data-tab="gallery">Gallery</button>
             <button class="tab-button" data-tab="videos">Videos</button>
+            <button class="tab-button" data-tab="audio">Audio</button>
             <button class="tab-button" data-tab="blog">Blog</button>
         </div>
 
@@ -51,6 +52,22 @@
                 <button type="submit">Add video</button>
             </form>
             <div id="videosAdmin"></div>
+        </div>
+
+        <!-- Audio Tab -->
+        <div id="audioTab" class="tab-content">
+            <form class="admin-upload-form" id="audioUploadForm">
+                <div>
+                    <label for="uploadAudio">Audio file (mp3, wav, ogg, m4a, aac, flac, opus, webm — max 50MB)</label>
+                    <input type="file" id="uploadAudio" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus,.webm" required />
+                </div>
+                <div>
+                    <label for="audioDesc">Description (optional)</label>
+                    <input type="text" id="audioDesc" placeholder="Description (optional)" />
+                </div>
+                <button type="submit">Add audio</button>
+            </form>
+            <div id="audioAdmin"></div>
         </div>
 
         <!-- Blog Tab -->

@@ -1,22 +1,22 @@
 /* ===================================
-   GALLERY PAGE JAVASCRIPT
+   MEDIA PAGE (videos + audio)
    =================================== */
 
-const GALLERY_I18N_FALLBACK = {
-  'gallery.loading': 'Loading gallery…',
-  'gallery.noImages': 'No images yet',
-  'gallery.subtitle': 'A collection of moments and memories'
+const MEDIA_I18N_FALLBACK = {
+  'media.loading': 'Loading media…',
+  'media.noItems': 'No videos or audio yet',
+  'media.subtitle': 'Videos and audio'
 };
 
 document.addEventListener('DOMContentLoaded', async function () {
-  const galleryGrid = document.getElementById('gallery-grid');
+  const mediaGrid = document.getElementById('media-grid');
 
   function t(key) {
     if (window.i18n) {
       const val = window.i18n.get(key);
       if (val != null && val !== key) return val;
     }
-    return GALLERY_I18N_FALLBACK[key] || key;
+    return MEDIA_I18N_FALLBACK[key] || key;
   }
 
   function escapeHtml(text) {
@@ -30,55 +30,65 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
       await window.i18n.loadTranslations();
     } catch (e) {
-      console.warn('Gallery: could not load translations', e);
+      console.warn('Media: could not load translations', e);
     }
   }
 
-  galleryGrid.innerHTML = `<div class="gallery-loading">${t('gallery.loading')}</div>`;
+  mediaGrid.innerHTML = `<div class="gallery-loading">${t('media.loading')}</div>`;
 
-  async function fetchGalleryItems() {
-    const galleryRes = await fetch('/api/gallery', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      mode: 'cors'
-    });
+  async function fetchMediaItems() {
+    const [videosRes, audioRes] = await Promise.all([
+      fetch('/api/videos', { method: 'GET', headers: { 'Content-Type': 'application/json' }, mode: 'cors' }),
+      fetch('/api/audio', { method: 'GET', headers: { 'Content-Type': 'application/json' }, mode: 'cors' })
+    ]);
 
-    if (!galleryRes.ok) {
-      throw new Error(`Gallery HTTP ${galleryRes.status}`);
+    let videos = [];
+    if (videosRes.ok) {
+      const videosData = await videosRes.json();
+      if (videosData.success && videosData.videos) {
+        videos = videosData.videos.map((row) => ({
+          type: 'video',
+          src: row.src,
+          description: row.description || ''
+        }));
+      }
     }
 
-    const galleryData = await galleryRes.json();
-    if (!galleryData.success) {
-      throw new Error(galleryData.error || 'Failed to load gallery');
+    let audioItems = [];
+    if (audioRes.ok) {
+      const audioData = await audioRes.json();
+      if (audioData.success && audioData.audio) {
+        audioItems = audioData.audio.map((row) => ({
+          type: 'audio',
+          src: row.src,
+          description: row.description || ''
+        }));
+      }
     }
 
-    return (galleryData.images || []).map((row) => ({
-      type: 'image',
-      src: row.src,
-      description: row.description || ''
-    }));
+    return [...videos, ...audioItems];
   }
 
-  async function loadGallery() {
+  async function loadMedia() {
     try {
-      const items = await fetchGalleryItems();
+      const items = await fetchMediaItems();
 
       if (items.length === 0) {
-        galleryGrid.innerHTML = `
+        mediaGrid.innerHTML = `
           <div class="gallery-empty">
-            <h2>${t('gallery.noImages')}</h2>
-            <p>${t('gallery.subtitle')}</p>
+            <h2>${t('media.noItems')}</h2>
+            <p>${t('media.subtitle')}</p>
           </div>
         `;
         return;
       }
 
-      renderGallery(items);
+      renderMedia(items);
     } catch (error) {
-      console.error('Error loading gallery:', error);
-      galleryGrid.innerHTML = `
+      console.error('Error loading media:', error);
+      mediaGrid.innerHTML = `
         <div class="gallery-loading">
-          <p>Error loading gallery.</p>
+          <p>Error loading media.</p>
           <p>Please check that the server is running and try refreshing the page.</p>
           <p>Error: ${escapeHtml(error.message)}</p>
         </div>
@@ -86,39 +96,89 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   }
 
-  function renderGallery(items) {
-    galleryGrid.innerHTML = '';
+  function renderMedia(items) {
+    mediaGrid.innerHTML = '';
 
     items.forEach((item, idx) => {
-      const el = createGalleryItem(item, idx, items);
-      galleryGrid.appendChild(el);
+      const el = createMediaItem(item, idx, items);
+      mediaGrid.appendChild(el);
     });
 
     const title = document.querySelector('title');
     if (title) {
-      title.textContent = `Gallery (${items.length}) | Petras Music Atelier`;
+      title.textContent = `${t('media.title')} (${items.length}) | Petras Music Atelier`;
     }
   }
 
-  function createGalleryItem(item, idx, items) {
+  let activeInlineAudio = null;
+
+  function createMediaItem(item, idx, items) {
     const div = document.createElement('div');
-    div.className = 'gallery-item';
+    div.className = 'gallery-item' +
+      (item.type === 'video' ? ' gallery-item--video' : '') +
+      (item.type === 'audio' ? ' gallery-item--audio' : '');
 
     const desc = escapeHtml(item.description || '');
-    div.innerHTML = `
-        <img src="${escapeHtml(item.src)}" alt="${desc}" loading="lazy">
+    if (item.type === 'video') {
+      div.innerHTML = `
+        <div class="gallery-item-media">
+          <video class="gallery-item-video" src="${escapeHtml(item.src)}" muted playsinline preload="metadata"></video>
+          <span class="gallery-video-play" aria-hidden="true"><i class="fas fa-play"></i></span>
+        </div>
         <div class="gallery-item-description">${desc}</div>
       `;
-
-    div.addEventListener('click', function () {
-      openLightbox(idx, items);
-    });
+      div.addEventListener('click', function () {
+        openVideoLightbox(idx, items);
+      });
+    } else if (item.type === 'audio') {
+      div.innerHTML = `
+        <div class="gallery-item-media gallery-item-media--audio">
+          <span class="gallery-audio-icon" aria-hidden="true"><i class="fas fa-music"></i></span>
+        </div>
+        <div class="gallery-item-description">${desc}</div>
+      `;
+      div.addEventListener('click', function (e) {
+        if (e.target.closest('audio')) return;
+        const wrap = div.querySelector('.gallery-inline-audio-wrap');
+        if (!wrap) {
+          const w = document.createElement('div');
+          w.className = 'gallery-inline-audio-wrap';
+          const audio = document.createElement('audio');
+          audio.setAttribute('controls', '');
+          audio.setAttribute('playsinline', '');
+          audio.preload = 'metadata';
+          audio.className = 'media-inline-audio';
+          audio.src = item.src;
+          w.appendChild(audio);
+          div.querySelector('.gallery-item-media--audio').appendChild(w);
+          div.classList.add('gallery-item--audio-open');
+          if (activeInlineAudio && activeInlineAudio !== audio) {
+            activeInlineAudio.pause();
+          }
+          activeInlineAudio = audio;
+          return;
+        }
+        wrap.classList.toggle('gallery-inline-audio--collapsed');
+        const a = wrap.querySelector('audio');
+        if (wrap.classList.contains('gallery-inline-audio--collapsed')) {
+          if (a) a.pause();
+        } else if (a) {
+          if (activeInlineAudio && activeInlineAudio !== a) activeInlineAudio.pause();
+          activeInlineAudio = a;
+        }
+      });
+    }
 
     return div;
   }
 
-  function openLightbox(startIdx, items) {
-    let currentIdx = startIdx;
+  function openVideoLightbox(startIdx, items) {
+    const item = items[startIdx];
+    if (item.type !== 'video') return;
+    const videosOnly = items.filter((i) => i.type === 'video');
+    if (videosOnly.length === 0) return;
+    let currentIdx = videosOnly.findIndex((v) => v.src === item.src);
+    if (currentIdx < 0) currentIdx = 0;
 
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
@@ -127,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         <span class="lightbox-close">&times;</span>
         <button class="lightbox-prev" aria-label="Previous">&#10094;</button>
         <div class="lightbox-media" id="lightbox-media">
-          <img src="" alt="" id="lightbox-img">
+          <video controls playsinline id="lightbox-video"></video>
         </div>
         <button class="lightbox-next" aria-label="Next">&#10095;</button>
         <div id="lightbox-description" style="margin-top: 1rem;"></div>
@@ -170,11 +230,10 @@ document.addEventListener('DOMContentLoaded', async function () {
       justify-content: center;
     `;
 
-    const img = lightbox.querySelector('#lightbox-img');
-    img.style.cssText = `
+    const video = lightbox.querySelector('#lightbox-video');
+    video.style.cssText = `
       max-width: 100%;
       max-height: 80vh;
-      object-fit: contain;
       border-radius: 8px;
       margin: 0 2.5rem;
     `;
@@ -236,12 +295,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       word-break: break-word;
     `;
 
-    function updateLightbox(idx) {
-      const item = items[idx];
-      descEl.textContent = item.description || '';
-      img.style.display = 'block';
-      img.src = item.src;
-      img.alt = item.description || '';
+    function updateLightbox(vIdx) {
+      const v = videosOnly[vIdx];
+      descEl.textContent = v.description || '';
+      video.src = v.src;
+      video.load();
     }
 
     document.body.appendChild(lightbox);
@@ -251,11 +309,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     }, 10);
 
     function showPrev() {
-      currentIdx = (currentIdx - 1 + items.length) % items.length;
+      currentIdx = (currentIdx - 1 + videosOnly.length) % videosOnly.length;
       updateLightbox(currentIdx);
     }
     function showNext() {
-      currentIdx = (currentIdx + 1) % items.length;
+      currentIdx = (currentIdx + 1) % videosOnly.length;
       updateLightbox(currentIdx);
     }
     prevBtn.addEventListener('click', showPrev);
@@ -269,6 +327,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.addEventListener('keydown', keyHandler);
 
     function closeLightbox() {
+      video.pause();
+      video.removeAttribute('src');
       lightbox.style.opacity = '0';
       setTimeout(() => {
         if (lightbox.parentNode) {
@@ -287,9 +347,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     updateLightbox(currentIdx);
   }
 
-  loadGallery();
+  loadMedia();
 
-  window.refreshGallery = function () {
-    loadGallery();
+  window.refreshMedia = function () {
+    loadMedia();
   };
 });

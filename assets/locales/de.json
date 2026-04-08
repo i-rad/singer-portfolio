@@ -3,6 +3,7 @@
         "home": "Startseite",
         "about": "Über mich",
         "gallery": "Galerie",
+        "media": "Medien ansehen",
         "blog": "Blog"
     },
     "home": {
@@ -30,8 +31,15 @@
         "title": "Galerie",
         "subtitle": "Eine Sammlung von Momenten und Erinnerungen",
         "backButton": "Zurück zur Startseite",
-        "noImages": "Noch keine Bilder oder Videos",
+        "noImages": "Noch keine Bilder",
         "loading": "Lade Galerie..."
+    },
+    "media": {
+        "title": "Medien",
+        "subtitle": "Videos und Audioaufnahmen",
+        "backButton": "Zurück zur Startseite",
+        "noItems": "Noch keine Videos oder Audio",
+        "loading": "Lade Medien..."
     },
     "about": {
         "title": "Über mich",

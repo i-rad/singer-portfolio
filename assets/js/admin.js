@@ -5,6 +5,7 @@ const loginError = document.getElementById('loginError');
 const adminPanel = document.getElementById('adminPanel');
 const galleryAdmin = document.getElementById('galleryAdmin');
 const videosAdmin = document.getElementById('videosAdmin');
+const audioAdmin = document.getElementById('audioAdmin');
 const blogAdmin = document.getElementById('blogAdmin');
 const logoutBtn = document.getElementById('logoutBtn');
 
@@ -14,6 +15,7 @@ function showPanel() {
     adminPanel.classList.add('active');
     loadGalleryAdmin();
     loadVideosAdmin();
+    /* Audio list loads when the Audio tab is opened so <audio controls> mount in a visible panel */
     loadBlogAdmin();
 }
 function showLogin() {
@@ -64,8 +66,22 @@ document.querySelectorAll('.tab-button').forEach(button => {
         const tabName = this.getAttribute('data-tab');
         document.getElementById(tabName + 'Tab').classList.add('active');
         if (tabName === 'videos') loadVideosAdmin();
+        if (tabName === 'audio') loadAudioAdmin();
     });
 });
+
+async function runWithUploadButton(button, loadingText, asyncFn) {
+    if (!button) return;
+    const original = button.textContent;
+    button.disabled = true;
+    button.textContent = loadingText;
+    try {
+        await asyncFn();
+    } finally {
+        button.disabled = false;
+        button.textContent = original;
+    }
+}
 
 async function loadGalleryAdmin() {
     galleryAdmin.innerHTML = '<em>Loading images...</em>';
@@ -174,6 +190,62 @@ async function loadVideosAdmin() {
     });
 }
 
+async function loadAudioAdmin() {
+    if (!audioAdmin) return;
+    audioAdmin.innerHTML = '<em>Loading audio...</em>';
+    const res = await fetch('/api/audio');
+    const data = await res.json();
+    if (!data.success) {
+        audioAdmin.innerHTML = '<span style="color:#b00">Failed to load audio</span>';
+        return;
+    }
+    if (!data.audio || data.audio.length === 0) {
+        audioAdmin.innerHTML = '<p style="color: var(--ruby); font-family: Montserrat, sans-serif;">No audio files yet. Upload one above.</p>';
+        return;
+    }
+    audioAdmin.innerHTML = `
+    <table class="admin-gallery-table admin-audio-table">
+      <thead><tr><th>Open</th><th>Description</th><th>Actions</th></tr></thead>
+      <tbody>
+        ${data.audio.map(a => `
+          <tr data-id="${a.id}">
+            <td class="admin-audio-cell">
+              <a href="${escapeHtml(a.src)}" target="_blank" rel="noopener noreferrer" class="admin-audio-open-link">Open audio</a>
+            </td>
+            <td><input type="text" value="${escapeHtml(a.description || '')}" class="audio-desc-input" /></td>
+            <td>
+              <button type="button" class="save-audio-btn">Save</button>
+              <button type="button" class="delete-audio-btn">Delete</button>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+    document.querySelectorAll('.save-audio-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            const tr = this.closest('tr');
+            const id = tr.getAttribute('data-id');
+            const desc = tr.querySelector('.audio-desc-input').value;
+            await fetch(`/api/admin/audio/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ description: desc })
+            });
+            loadAudioAdmin();
+        });
+    });
+    document.querySelectorAll('.delete-audio-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            if (!confirm('Delete this audio file?')) return;
+            const tr = this.closest('tr');
+            const id = tr.getAttribute('data-id');
+            await fetch(`/api/admin/audio/${id}`, { method: 'DELETE' });
+            loadAudioAdmin();
+        });
+    });
+}
+
 async function loadBlogAdmin() {
     const res = await fetch('/api/blog');
     const data = await res.json();
@@ -212,15 +284,27 @@ if (uploadForm) {
         const file = document.getElementById('uploadImage').files[0];
         const desc = document.getElementById('uploadDesc').value;
         if (!file) return;
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('description', desc);
-        await fetch('/api/admin/images', {
-            method: 'POST',
-            body: formData
+        const submitBtn = uploadForm.querySelector('button[type="submit"]');
+        await runWithUploadButton(submitBtn, 'Uploading…', async () => {
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('description', desc);
+                const res = await fetch('/api/admin/images', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok || !data.success) {
+                    alert(data.error || 'Upload failed');
+                    return;
+                }
+                uploadForm.reset();
+                loadGalleryAdmin();
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
         });
-        uploadForm.reset();
-        loadGalleryAdmin();
     });
 }
 
@@ -231,24 +315,58 @@ if (videoUploadForm) {
         const file = document.getElementById('uploadVideo').files[0];
         const desc = document.getElementById('videoDesc').value;
         if (!file) return;
-        const formData = new FormData();
-        formData.append('video', file);
-        formData.append('description', desc);
-        try {
-            const res = await fetch('/api/admin/videos', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.success) {
-                videoUploadForm.reset();
-                loadVideosAdmin();
-            } else {
-                alert(data.error || 'Upload failed');
+        const submitBtn = videoUploadForm.querySelector('button[type="submit"]');
+        await runWithUploadButton(submitBtn, 'Uploading…', async () => {
+            try {
+                const formData = new FormData();
+                formData.append('video', file);
+                formData.append('description', desc);
+                const res = await fetch('/api/admin/videos', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    videoUploadForm.reset();
+                    loadVideosAdmin();
+                } else {
+                    alert(data.error || 'Upload failed');
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
             }
-        } catch (err) {
-            alert('Error: ' + err.message);
-        }
+        });
+    });
+}
+
+const audioUploadForm = document.getElementById('audioUploadForm');
+if (audioUploadForm) {
+    audioUploadForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const file = document.getElementById('uploadAudio').files[0];
+        const desc = document.getElementById('audioDesc').value;
+        if (!file) return;
+        const submitBtn = audioUploadForm.querySelector('button[type="submit"]');
+        await runWithUploadButton(submitBtn, 'Uploading…', async () => {
+            try {
+                const formData = new FormData();
+                formData.append('audio', file);
+                formData.append('description', desc);
+                const res = await fetch('/api/admin/audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    audioUploadForm.reset();
+                    loadAudioAdmin();
+                } else {
+                    alert(data.error || 'Upload failed');
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        });
     });
 }
 
@@ -268,28 +386,31 @@ if (blogForm) {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        if (imageFile) formData.append('image', imageFile);
-        if (videoFile) formData.append('video', videoFile);
-        if (embedded) formData.append('embedded_video', embedded);
+        const submitBtn = blogForm.querySelector('button[type="submit"]');
+        await runWithUploadButton(submitBtn, 'Uploading…', async () => {
+            try {
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('content', content);
+                if (imageFile) formData.append('image', imageFile);
+                if (videoFile) formData.append('video', videoFile);
+                if (embedded) formData.append('embedded_video', embedded);
 
-        try {
-            const res = await fetch('/api/admin/blog', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            if (data.success) {
-                blogForm.reset();
-                loadBlogAdmin();
-            } else {
-                alert('Error: ' + (data.error || 'Failed to create post'));
+                const res = await fetch('/api/admin/blog', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.success) {
+                    blogForm.reset();
+                    loadBlogAdmin();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to create post'));
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
             }
-        } catch (error) {
-            alert('Error: ' + error.message);
-        }
+        });
     });
 }
 

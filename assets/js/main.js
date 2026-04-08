@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Check if we're on the gallery or blog page (no hero section)
+    // Subpages without hero (gallery, media, blog): keep navbar scrolled
     const isGalleryPage = !document.querySelector('.hero');
 
     window.addEventListener('scroll', () => {
-      // On gallery/blog page, always keep navbar scrolled state
+      // On those pages, always keep navbar scrolled state
       if (isGalleryPage) {
         if (navbar) navbar.classList.add('scrolled');
         return;

@@ -70,10 +70,18 @@
   }
 
   .navbar ul li a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
     color: var(--primary);
     padding: 0.5rem 1rem;
     font-size: 2rem;
-    text-wrap-mode: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.15;
+    hyphens: auto;
   }
 
   .navbar ul li.language-toggle-mobile {
@@ -91,6 +99,11 @@
 
   .navbar ul li a::after {
     background: var(--primary);
+  }
+
+  .navbar ul li a.active::after,
+  .navbar ul li a:hover::after {
+    width: 60%;
   }
 
   .navbar .hamburger {

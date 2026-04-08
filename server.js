@@ -3,6 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+
+/** Writable app data (SQLite + uploads). Set to a mounted volume path in production so deploys do not wipe the DB. */
+const DATA_ROOT = process.env.DATA_ROOT ? path.resolve(process.env.DATA_ROOT) : __dirname;
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const cookieParser = require('cookie-parser');
@@ -55,9 +58,10 @@ const multer = require('multer');
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB (blog post attachments)
 const MAX_STANDALONE_VIDEO_SIZE = 150 * 1024 * 1024; // 150MB (videos library)
+const MAX_AUDIO_SIZE = 50 * 1024 * 1024; // 50MB (audio library)
 
 const galleryStorage = multer.diskStorage({
-    destination: path.join(__dirname, 'gallery'),
+    destination: path.join(DATA_ROOT, 'gallery'),
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, uniqueSuffix + path.extname(file.originalname));
@@ -65,7 +69,7 @@ const galleryStorage = multer.diskStorage({
 });
 
 const blogStorage = multer.diskStorage({
-    destination: path.join(__dirname, 'blog-assets'),
+    destination: path.join(DATA_ROOT, 'blog-assets'),
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, uniqueSuffix + path.extname(file.originalname));
@@ -82,7 +86,7 @@ const blogUpload = multer({
     limits: { fileSize: MAX_VIDEO_SIZE }
 });
 
-const videosDir = path.join(__dirname, 'videos');
+const videosDir = path.join(DATA_ROOT, 'videos');
 const videoLibraryStorage = multer.diskStorage({
     destination: videosDir,
     filename: (req, file, cb) => {
@@ -94,6 +98,20 @@ const videoLibraryStorage = multer.diskStorage({
 const videoLibraryUpload = multer({
     storage: videoLibraryStorage,
     limits: { fileSize: MAX_STANDALONE_VIDEO_SIZE }
+});
+
+const audioDir = path.join(DATA_ROOT, 'audio');
+const audioLibraryStorage = multer.diskStorage({
+    destination: audioDir,
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const audioLibraryUpload = multer({
+    storage: audioLibraryStorage,
+    limits: { fileSize: MAX_AUDIO_SIZE }
 });
 
 app.post('/api/admin/images', requireAdmin, upload.single('image'), (req, res) => {
@@ -123,7 +141,7 @@ app.put('/api/admin/images/:id', requireAdmin, (req, res) => {
 app.delete('/api/admin/images/:id', requireAdmin, (req, res) => {
     db.get('SELECT path FROM images WHERE id = ?', [req.params.id], (err, row) => {
         if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
-        const filePath = path.join(__dirname, row.path.replace(/^\//, ''));
+        const filePath = path.join(DATA_ROOT, row.path.replace(/^\//, ''));
         db.run('DELETE FROM images WHERE id = ?', [req.params.id], function (err2) {
             if (err2) return res.status(500).json({ success: false, error: 'DB error' });
             fs.unlink(filePath, () => { });
@@ -157,7 +175,7 @@ app.put('/api/admin/videos/:id', requireAdmin, (req, res) => {
 app.delete('/api/admin/videos/:id', requireAdmin, (req, res) => {
     db.get('SELECT path FROM videos WHERE id = ?', [req.params.id], (err, row) => {
         if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
-        const filePath = path.join(__dirname, row.path.replace(/^\//, ''));
+        const filePath = path.join(DATA_ROOT, row.path.replace(/^\//, ''));
         db.run('DELETE FROM videos WHERE id = ?', [req.params.id], function (err2) {
             if (err2) return res.status(500).json({ success: false, error: 'DB error' });
             fs.unlink(filePath, () => { });
@@ -166,19 +184,63 @@ app.delete('/api/admin/videos/:id', requireAdmin, (req, res) => {
     });
 });
 
+app.post('/api/admin/audio', requireAdmin, audioLibraryUpload.single('audio'), (req, res) => {
+    if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded' });
+    const ext = path.extname(req.file.originalname).toLowerCase();
+    const allowed = ['.mp3', '.wav', '.ogg', '.m4a', '.aac', '.flac', '.opus', '.webm'];
+    if (!allowed.includes(ext)) {
+        fs.unlinkSync(req.file.path);
+        return res.status(400).json({ success: false, error: 'Invalid file type (use mp3, wav, ogg, m4a, aac, flac, opus, or webm)' });
+    }
+    const relPath = `/audio/${path.basename(req.file.path)}`;
+    db.run('INSERT INTO audio (path, description) VALUES (?, ?)', [relPath, req.body.description || ''], function (err) {
+        if (err) return res.status(500).json({ success: false, error: 'DB error' });
+        res.json({ success: true, id: this.lastID, src: relPath, description: req.body.description || '' });
+    });
+});
+
+app.put('/api/admin/audio/:id', requireAdmin, (req, res) => {
+    db.run('UPDATE audio SET description = ? WHERE id = ?', [req.body.description, req.params.id], function (err) {
+        if (err) return res.status(500).json({ success: false, error: 'DB error' });
+        res.json({ success: true });
+    });
+});
+
+app.delete('/api/admin/audio/:id', requireAdmin, (req, res) => {
+    db.get('SELECT path FROM audio WHERE id = ?', [req.params.id], (err, row) => {
+        if (err || !row) return res.status(404).json({ success: false, error: 'Not found' });
+        const filePath = path.join(DATA_ROOT, row.path.replace(/^\//, ''));
+        db.run('DELETE FROM audio WHERE id = ?', [req.params.id], function (err2) {
+            if (err2) return res.status(500).json({ success: false, error: 'DB error' });
+            fs.unlink(filePath, () => { });
+            res.json({ success: true });
+        });
+    });
+});
+
+app.use('/gallery', express.static(path.join(DATA_ROOT, 'gallery')));
+app.use('/blog-assets', express.static(path.join(DATA_ROOT, 'blog-assets')));
+app.use('/videos', express.static(path.join(DATA_ROOT, 'videos')));
+app.use('/audio', express.static(path.join(DATA_ROOT, 'audio')));
 app.use(express.static('.'));
 
-const DB_PATH = path.join(__dirname, 'gallery.db');
+const DB_PATH = path.join(DATA_ROOT, 'gallery.db');
 const db = new sqlite3.Database(DB_PATH);
 
 function initDbAndPopulate() {
-    // Create blog-assets directory if it doesn't exist
-    const blogDir = path.join(__dirname, 'blog-assets');
+    const galleryDirEnsure = path.join(DATA_ROOT, 'gallery');
+    const blogDir = path.join(DATA_ROOT, 'blog-assets');
+    if (!fs.existsSync(galleryDirEnsure)) {
+        fs.mkdirSync(galleryDirEnsure, { recursive: true });
+    }
     if (!fs.existsSync(blogDir)) {
         fs.mkdirSync(blogDir, { recursive: true });
     }
     if (!fs.existsSync(videosDir)) {
         fs.mkdirSync(videosDir, { recursive: true });
+    }
+    if (!fs.existsSync(audioDir)) {
+        fs.mkdirSync(audioDir, { recursive: true });
     }
 
     db.serialize(() => {
@@ -189,6 +251,12 @@ function initDbAndPopulate() {
     )`);
 
         db.run(`CREATE TABLE IF NOT EXISTS videos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      path TEXT NOT NULL,
+      description TEXT
+    )`);
+
+        db.run(`CREATE TABLE IF NOT EXISTS audio (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       path TEXT NOT NULL,
       description TEXT
@@ -208,7 +276,7 @@ function initDbAndPopulate() {
         db.get('SELECT COUNT(*) as count FROM images', (err, row) => {
             if (err) return;
             if (row.count === 0) {
-                const galleryDir = path.join(__dirname, 'gallery');
+                const galleryDir = path.join(DATA_ROOT, 'gallery');
                 if (fs.existsSync(galleryDir)) {
                     const files = fs.readdirSync(galleryDir);
                     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
@@ -251,6 +319,24 @@ app.get('/api/videos', (req, res) => {
         }
         res.json({
             videos: rows.map(row => ({
+                id: row.id,
+                src: row.path,
+                description: row.description || ''
+            })),
+            count: rows.length,
+            success: true
+        });
+    });
+});
+
+app.get('/api/audio', (req, res) => {
+    db.all('SELECT id, path, description FROM audio ORDER BY id ASC', (err, rows) => {
+        if (err) {
+            console.error('DB error:', err);
+            return res.status(500).json({ error: 'Failed to load audio', success: false });
+        }
+        res.json({
+            audio: rows.map(row => ({
                 id: row.id,
                 src: row.path,
                 description: row.description || ''
@@ -312,11 +398,11 @@ app.delete('/api/admin/blog/:id', requireAdmin, (req, res) => {
 
         // Delete associated files
         if (row.image) {
-            const imagePath = path.join(__dirname, row.image);
+            const imagePath = path.join(DATA_ROOT, row.image.replace(/^\//, ''));
             fs.unlink(imagePath, () => { });
         }
         if (row.video) {
-            const videoPath = path.join(__dirname, row.video);
+            const videoPath = path.join(DATA_ROOT, row.video.replace(/^\//, ''));
             fs.unlink(videoPath, () => { });
         }
 
