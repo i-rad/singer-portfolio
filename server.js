@@ -15,7 +15,8 @@ const ADMIN_COOKIE = 'admin_auth';
 const ADMIN_COOKIE_SECRET = process.env.ADMIN_COOKIE_SECRET;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -425,8 +426,8 @@ app.get('/api/test', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Gallery API available at http://localhost:${PORT}/api/gallery`);
-    console.log(`Test API available at http://localhost:${PORT}/api/test`);
+app.listen(PORT, HOST, () => {
+    console.log(`Server listening on ${HOST}:${PORT}`);
+    console.log(`Gallery API available at /api/gallery`);
+    console.log(`Test API available at /api/test`);
 });
